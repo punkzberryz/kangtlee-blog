@@ -12,6 +12,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     h1: ({ children }) => (
       <h1 style={{ color: "red", fontSize: "48px" }}>{children}</h1>
     ),
+    h2: ({ children }) => (
+      <h2 style={{ color: "green", fontSize: "32px" }}>{children}</h2>
+    ),
     img: (props) => (
       <Image
         sizes="100vw"
@@ -19,6 +22,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...(props as ImageProps)}
         alt={props.alt || ""}
       />
+    ),
+    p: ({ children }) => (
+      <p style={{ color: "blue", fontSize: "16px" }}>{children}</p>
     ),
     ...components,
   };

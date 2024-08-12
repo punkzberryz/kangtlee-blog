@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import { getPost, getPosts } from "../_components/fetch-post";
-
+import { MDXRemote } from "next-mdx-remote/rsc";
+import { useMDXComponents } from "../_components/mdx-components";
+import remarkGfm from "remark-gfm";
 const BlogPageBySlug = async ({
   params: { slug },
 }: {
@@ -9,9 +11,21 @@ const BlogPageBySlug = async ({
   };
 }) => {
   const post = await getPost(slug);
+  const components = useMDXComponents({});
   if (!post) return notFound();
-
-  return <div>{post.body}</div>;
+  return (
+    <div>
+      <MDXRemote
+        source={post.body}
+        components={components}
+        options={{
+          mdxOptions: {
+            remarkPlugins: [remarkGfm],
+          },
+        }}
+      />
+    </div>
+  );
 };
 
 export default BlogPageBySlug;
