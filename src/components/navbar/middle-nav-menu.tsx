@@ -3,13 +3,16 @@
 import { cn } from "@/lib/utils";
 import {
   NavigationMenu,
+  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
+  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "../ui/navigation-menu";
 import Link from "next/link";
-import { LinkProps, LINKS } from "./links";
+import { ADMIN_LINKS, LinkProps, LINKS } from "./links";
 import { usePathname } from "next/navigation";
+import { NonUndefined } from "react-hook-form";
 
 export const MiddleNavMenu = () => {
   const pathname = usePathname();
@@ -24,6 +27,74 @@ export const MiddleNavMenu = () => {
         />
       ))}
     </NavigationMenu>
+  );
+};
+
+export const AdminMiddleNavMenu = () => {
+  const pathname = usePathname();
+  return (
+    <NavigationMenu className="list-none space-x-4">
+      {ADMIN_LINKS.map((link, index) =>
+        link.sublinks ? (
+          <NavLinkWithSubLinks
+            key={index}
+            href={link.href}
+            label={link.label}
+            active={pathname.startsWith(link.href)}
+            sublinks={link.sublinks}
+          />
+        ) : (
+          <NavLink
+            key={index}
+            href={link.href}
+            label={link.label}
+            active={pathname.startsWith(link.href)}
+          />
+        ),
+      )}
+    </NavigationMenu>
+  );
+};
+
+const NavLinkWithSubLinks = ({
+  href,
+  label,
+  sublinks,
+  active,
+}: LinkProps & { active: boolean } & {
+  sublinks: NonUndefined<LinkProps["sublinks"]>;
+}) => {
+  return (
+    <NavigationMenuItem>
+      <NavigationMenuTrigger
+        className={navigationMenuTriggerStyle({
+          className: cn(
+            "bg-primary text-background underline-offset-4 hover:bg-primary hover:text-secondary focus:bg-primary focus:text-secondary data-[state=open]:bg-primary",
+            active && "underline underline-offset-4",
+          ),
+        })}
+      >
+        {label}
+      </NavigationMenuTrigger>
+      <NavigationMenuContent>
+        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+          {sublinks.map((link, index) => (
+            <NavigationMenuItem key={`${label}-${index}`}>
+              <NavigationMenuLink asChild className="flex flex-col gap-2">
+                <Link href={href}>
+                  <div className="text-sm font-medium leading-none">
+                    {link.label}
+                  </div>
+                  <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                    {link.description}
+                  </p>
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          ))}
+        </ul>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
   );
 };
 

@@ -14,7 +14,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { GoogleIcon, LineIcon } from "@/lib/icons";
+import { GoogleIcon, LineIcon } from "@/components/icons";
+
 export const SignUpForm = () => {
   const router = useRouter();
   const [openDialog, setOpenDialog] = useState(false);

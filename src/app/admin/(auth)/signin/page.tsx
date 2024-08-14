@@ -2,7 +2,7 @@ import Link from "next/link";
 import { AuthLayoutWrapper } from "../_components/auth-layout-wrapper";
 import { FetchUserOnAuth } from "../_components/fetch-user-on-auth";
 import { Button } from "@/components/ui/button";
-import { GoogleIcon, LineIcon } from "@/lib/icons";
+import { GoogleIcon, LineIcon } from "@/components/icons";
 
 const SignInPage = () => {
   return (
