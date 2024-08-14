@@ -13,11 +13,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id          String    @id
+  email       String?   @unique
+  googleId    String?   @unique
+  lineLoginId String?   @unique
+  displayName String
+  sessions    Session[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([email])
+  @@index([googleId])
+  @@index([lineLoginId])
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
 model Post {
   id        Int     @id @default(autoincrement())
   slug      String  @unique
   title     String
-  content   String?
+  content   String? @db.Text
   published Boolean @default(false)
 
   @@index([slug])
