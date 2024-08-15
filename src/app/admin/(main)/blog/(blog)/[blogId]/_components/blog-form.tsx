@@ -1,7 +1,7 @@
 "use client";
 
 import { FieldErrors, useForm } from "react-hook-form";
-import { postSchema, PostSchema } from "./post-schema";
+import { postSchema, PostSchema } from "../../_components/post-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -19,13 +19,39 @@ import {
 import { Editor } from "@/components/editor/editor";
 import { ImageUrlField } from "./image-url-field";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePostStore } from "@/app/hooks/use-post-store";
-import { createPost } from "./post-action";
+import { createPost } from "../../_components/post-action";
 import { toast } from "react-toastify";
+import { Post, PostCategory, PostTag } from "@prisma/client";
+import { CustomSelectBoxField } from "@/components/custom-form-fields/custom-select-field";
+import { CustomTextAreaField } from "@/components/custom-form-fields/custom-textarea-field";
+import { FetchPostById } from "../../_components/fetch-data";
 
-export const NewBlogClient = () => {
-  const { form, onSubmit, saveStatus, setSaveStatus } = useBlogState();
+interface BlogFormProps {
+  isNew?: boolean;
+  title: string;
+  categories: PostCategory[];
+  tags: PostTag[];
+  initialData: FetchPostById | null;
+}
+export const BlogForm = ({
+  categories,
+  initialData,
+  tags,
+  title,
+  isNew,
+}: BlogFormProps) => {
+  const { form, onSubmit, saveStatus, setSaveStatus } = useBlogState({
+    initialData,
+  });
+  const { post } = usePostStore();
+  useEffect(() => {
+    if (!post.htmlContent || !isNew) return;
+    if (isNew) {
+      form.setValue("htmlContent", post.htmlContent);
+    }
+  }, [post.htmlContent, isNew, form]);
   return (
     <>
       <Form {...form}>
@@ -36,7 +62,7 @@ export const NewBlogClient = () => {
               name="title"
               label="Title"
             />
-            <CustomInputField
+            <CustomTextAreaField
               control={form.control}
               name="description"
               label="Description"
@@ -47,6 +73,33 @@ export const NewBlogClient = () => {
               label="Keywords"
             />
             <ImageUrlField control={form.control} />
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <CustomSelectBoxField
+                control={form.control}
+                name="categoryId"
+                label="หมวดหมู่"
+                options={categories.map((cat) => ({
+                  label: cat.name,
+                  value: cat.id.toString(),
+                }))}
+                emptyPlaceholder="ไม่พบหมวดหมู่"
+                placeholder="เลือกหมวดหมู่..."
+                inputPlaceholder="ค้นหาหมวดหมู่"
+              />
+              <CustomSelectBoxField
+                control={form.control}
+                name="tagIds"
+                label="tags"
+                options={tags.map((tag) => ({
+                  label: tag.name,
+                  value: tag.id.toString(),
+                }))}
+                emptyPlaceholder="ไม่พบ tag"
+                placeholder="เลือก tag ..."
+                inputPlaceholder="ค้นหา tag"
+                multiple
+              />
+            </div>
             <CustomCheckboxWrapper label="ตีพิมพ์">
               <CustomCheckboxField
                 control={form.control}
@@ -84,17 +137,25 @@ export const NewBlogClient = () => {
   );
 };
 
-const useBlogState = () => {
+const useBlogState = ({
+  initialData,
+}: {
+  initialData: FetchPostById | null;
+}) => {
   const { setPost } = usePostStore();
   const [saveStatus, setSaveStatus] = useState<"Saved" | "Unsaved">("Saved");
   const form = useForm<PostSchema>({
     resolver: zodResolver(postSchema),
+    //TODO: a bug where on initial load, htmlContent is empty while cache is not
     defaultValues: {
-      description: "",
-      title: "",
-      htmlContent: "",
-      keywords: "",
-      isPublished: false,
+      description: initialData?.description || "",
+      title: initialData?.title || "",
+      htmlContent: initialData?.content || "",
+      keywords: initialData?.keywords || "",
+      categoryId: initialData?.categoryId.toString() || "",
+      tagIds: initialData?.tags.map((t) => t.id.toString()) || [],
+      isPublished: initialData?.isPublished || false,
+      imgUrl: initialData?.imgUrl || "",
     },
   });
   const onSubmit = async (data: PostSchema) => {

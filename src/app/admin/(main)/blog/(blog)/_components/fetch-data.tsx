@@ -2,6 +2,7 @@ import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
 import { validateRequest } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { UnauthorizedError, UnauthorizedMessageCode } from "@/lib/error";
+import { Post } from "@prisma/client";
 import { Suspense } from "react";
 // import { Client } from "./client";
 
@@ -39,3 +40,4 @@ const FetchBlogs = async () => {
 };
 const BLOGS_LIMIT = 100;
 const BLOGS_PAGE_ID = 1;
+export type FetchPostById = Post & { tags: { id: number }[] };

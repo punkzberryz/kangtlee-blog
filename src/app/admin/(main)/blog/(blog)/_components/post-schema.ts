@@ -7,5 +7,7 @@ export const postSchema = z.object({
   htmlContent: z.string(),
   isPublished: z.boolean(),
   imgUrl: z.string().min(1, { message: "Image is required" }),
+  categoryId: z.string().min(1, { message: "category is required" }),
+  tagIds: z.array(z.string()).default([]),
 });
 export type PostSchema = z.infer<typeof postSchema>;

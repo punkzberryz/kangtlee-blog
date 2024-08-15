@@ -20,6 +20,7 @@ export const getPosts = cache(async (options: {} = {}) => {
 export const getPost = async (slug: string) => {
   try {
     const post = await db.post.findUnique({ where: { slug } });
+
     if (!post) throw new InternalServerError(getPostError.postNotFound);
     return { post };
   } catch (err) {

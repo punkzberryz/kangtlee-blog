@@ -1,7 +1,7 @@
 "use client";
 
 import { Control, UseFormReturn } from "react-hook-form";
-import { PostSchema } from "./post-schema";
+import { PostSchema } from "../../_components/post-schema";
 import {
   FormControl,
   FormField,
@@ -51,7 +51,7 @@ const ImageUploadTip = () => {
   return (
     <Dialog>
       <DialogTrigger>
-        <InfoIcon className="text-edit size-3" />
+        <InfoIcon className="size-3 text-edit" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
