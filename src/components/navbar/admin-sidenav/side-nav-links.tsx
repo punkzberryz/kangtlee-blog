@@ -43,6 +43,7 @@ const ADMIN_LINKS: LinkProps[] = [
         label: "เขียนบทความ",
         href: "/admin/blog/new",
       },
+      { label: "จัดการบทความทั่งหมด", href: "/admin/blog" },
       {
         label: "จัดการหมวดหมู่",
         href: "/admin/blog/category",
