@@ -52,6 +52,11 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Add on
+        edit: {
+          DEFAULT: "hsl(var(--edit))",
+          foreground: "hsl(var(--edit-foreground))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

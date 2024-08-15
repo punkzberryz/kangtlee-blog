@@ -26,7 +26,6 @@ type LinkProps = {
 type SubLinks = {
   label: string;
   href: string;
-  description: string;
 };
 
 const ADMIN_LINKS: LinkProps[] = [
@@ -43,29 +42,14 @@ const ADMIN_LINKS: LinkProps[] = [
       {
         label: "เขียนบทความ",
         href: "/admin/blog/new",
-        description: "เขียนบทความใหม่",
       },
       {
-        label: "เขียนบทความ",
-        href: "/admin/blog/new",
-        description: "เขียนบทความใหม่",
-      },
-    ],
-  },
-  {
-    href: "/admin/blog2",
-    label: "จัดการบทความ2",
-    icon: NewspaperIcon,
-    sublinks: [
-      {
-        label: "เขียนบทความ2",
-        href: "/admin/blog/new2",
-        description: "เขียนบทความใหม่2",
+        label: "จัดการหมวดหมู่",
+        href: "/admin/blog/category",
       },
       {
-        label: "เขียนบทความ ad asdas",
-        href: "/admin/blog/new",
-        description: "เขียนบทความใหม่",
+        label: "จัดการ Tags",
+        href: "/admin/blog/tag",
       },
     ],
   },
