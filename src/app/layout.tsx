@@ -6,6 +6,8 @@ import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ToastProvider } from "@/components/providers/toast-provider";
+import { config } from "@/lib/config";
+import QueryProvider from "@/components/providers/query-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,11 +17,13 @@ export const metadata: Metadata = {
     default: "KangTLee Blog",
   },
   description: "A blog about software development, programming, and lifestyle.",
+  metadataBase: new URL(config.baseUrl + "/"),
+  icons: "/logo.png",
   openGraph: {
     title: "KangTLee Blog",
     description:
       "A blog about software development, programming, and lifestyle.",
-    url: "https://kangtlee.com",
+    url: config.baseUrl,
     siteName: "KangTLee Blog",
     locale: "th_TH",
     type: "website",
@@ -45,7 +49,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <QueryProvider>{children}</QueryProvider>
           <ToastProvider />
         </ThemeProvider>
       </body>

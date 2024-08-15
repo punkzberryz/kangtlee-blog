@@ -22,6 +22,7 @@ model User {
   sessions    Session[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  Post        Post[]
 
   @@index([email])
   @@index([googleId])
@@ -38,11 +39,56 @@ model Session {
 }
 
 model Post {
-  id        Int     @id @default(autoincrement())
-  slug      String  @unique
-  title     String
-  content   String? @db.Text
-  published Boolean @default(false)
+  id          Int           @id @default(autoincrement())
+  slug        String        @unique
+  title       String
+  keywords    String
+  description String
+  content     String        @db.Text
+  imgUrl      String
+  isPublished Boolean       @default(false)
+  authorId    String
+  author      User?         @relation(fields: [authorId], references: [id])
+  category    PostCategory? @relation("CategoryToPost", fields: [categoryId], references: [id])
+  categoryId  Int
+  Comment     Comment[]
+  TagsOnPosts TagsOnPosts[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 
   @@index([slug])
+}
+
+model PostCategory {
+  id    Int    @id @default(autoincrement())
+  name  String
+  posts Post[] @relation("CategoryToPost")
+}
+
+model PostTag {
+  id          Int           @id @default(autoincrement())
+  name        String
+  TagsOnPosts TagsOnPosts[]
+}
+
+model TagsOnPosts {
+  post   Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId Int
+  tag    PostTag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  tagId  Int
+
+  @@id([tagId, postId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  postId    Int
+  Post      Post     @relation(fields: [postId], references: [id])
+  comment   String   @db.VarChar(255)
+  name      String
+  email     String
+  website   String?
+  createdAt DateTime @default(now())
+
+  @@index([postId])
 }

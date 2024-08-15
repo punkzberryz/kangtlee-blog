@@ -18,7 +18,7 @@ export const Logo = ({
   return (
     <div className={cn("rounded-full bg-background", className)}>
       <Image
-        src="/img/logo.webp"
+        src="/logo.png"
         alt="Logo"
         height={height || 25}
         width={width || 25}

@@ -30,6 +30,58 @@ export const SignOutDropdownItem = () => {
   );
 };
 
+export const SignOutButton = ({
+  className,
+  isExpanded,
+}: {
+  className?: string;
+  variant?: ButtonProps["variant"];
+  isExpanded: boolean;
+}) => {
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <div
+          className={
+            className ?? "mx-4 flex w-full cursor-pointer items-center"
+          }
+        >
+          <LogOut className="mr-3 h-6 w-6" />
+          <span hidden={!isExpanded}>ออกจากระบบ</span>
+        </div>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>ออกจากระบบ</DialogTitle>
+          <DialogDescription>คุณต้องการออกจากระบบใช่หรือไม่?</DialogDescription>
+        </DialogHeader>
+        <div className="flex flex-col gap-4 pt-4 md:flex-row-reverse">
+          <Button
+            disabled={loading}
+            onClick={() => handleSignout(router, setLoading)}
+          >
+            {loading ? (
+              <LoadingBars className="h-6 w-6" />
+            ) : (
+              <span>ออกจากระบบ</span>
+            )}
+          </Button>
+          <Button
+            disabled={loading}
+            variant="secondary"
+            onClick={() => setOpen(false)}
+          >
+            ยกเลิก
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
 async function handleSignout(
   router: ReturnType<typeof useRouter>,
   setLoading: (loading: boolean) => void,

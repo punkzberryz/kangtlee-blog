@@ -1,18 +1,33 @@
 import { cache } from "react";
+import { db } from "@/lib/db";
+import { InternalServerError } from "@/lib/error";
+import { catchErrorForServerActionHelper } from "@/lib/error/catch-error-action-helper";
 
-export const getPosts = cache(async () => {
-  // const posts = await fs.readdir("./src/markdown/");
-  // return Promise.all(
-  //   posts
-  //     .filter((file) => path.extname(file) === ".mdx")
-  //     .map(async (file) => {
-  //       const filePath = `./src/markdown/${file}`;
-  //       const postContent = await fs.readFile(filePath, "utf8");
-  //     }),
-  // );
+export const getPosts = cache(async (options: {} = {}) => {
+  try {
+    const posts = await db.post.findMany({
+      orderBy: {
+        id: "desc",
+      },
+    });
+    return { posts };
+  } catch (err) {
+    const error = catchErrorForServerActionHelper(err);
+    return { error };
+  }
 });
 
 export const getPost = async (slug: string) => {
-  // const posts = await getPosts();
-  // return posts.find((p) => p?.slug === slug) ?? null;
+  try {
+    const post = await db.post.findUnique({ where: { slug } });
+    if (!post) throw new InternalServerError(getPostError.postNotFound);
+    return { post };
+  } catch (err) {
+    const error = catchErrorForServerActionHelper(err);
+    return { error };
+  }
 };
+
+export const enum getPostError {
+  postNotFound = "post not found",
+}

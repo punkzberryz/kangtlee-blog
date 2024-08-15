@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import { cn, delay } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { getPost, getPostError } from "./get-post";
+import { getPost, getPostError } from "../../_components/fetch-post";
 
 interface FetchBlogProps {
   slug: string;
@@ -36,7 +36,7 @@ const FetchBlogAsync = async ({ slug }: FetchBlogProps) => {
       className={cn(
         "ProseMirror",
         "relative min-h-[500px] w-full max-w-screen-lg border-muted bg-background sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg",
-        "prose prose-lg dark:prose-invert prose-headings:font-title font-default max-w-full focus:outline-none",
+        "prose-headings:font-title font-default prose prose-lg max-w-full dark:prose-invert focus:outline-none",
       )}
     ></div>
   );

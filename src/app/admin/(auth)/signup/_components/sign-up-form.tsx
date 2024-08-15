@@ -54,7 +54,7 @@ export const SignUpForm = () => {
 
               <Button onClick={() => handleSignUp("LINE")}>
                 <LineIcon />
-                <span className="w-40 pl-2">เข้าสู่ระบบด้วย Google</span>
+                <span className="w-40 pl-2">เข้าสู่ระบบด้วย LINE</span>
               </Button>
             </div>
           </DialogHeader>

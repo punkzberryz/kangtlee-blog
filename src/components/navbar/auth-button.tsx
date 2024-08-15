@@ -1,5 +1,3 @@
-import { Suspense } from "react";
-import { Skeleton } from "../ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Tooltip,
@@ -16,28 +14,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { validateRequest } from "@/lib/auth";
+import { User } from "lucia";
 import { Button } from "../ui/button";
 import { LayoutGrid, UserIcon } from "lucide-react";
 import Link from "next/link";
 import { SignOutDropdownItem } from "./signout-button";
-
-export const AuthNav = () => {
-  //TODO: we may need key to force re-render if there is a link to the same page with different query params
-  return (
-    <Suspense fallback={<Skeleton className="h-8 w-8 rounded-full border" />}>
-      <FetchUser />
-    </Suspense>
-  );
-};
-
-const FetchUser = async () => {
-  const { user } = await validateRequest();
-  if (!user) {
-    // redirect("/auth/signin");
-    //we handle this in page.tsx
-    return null;
-  }
+export const AuthButton = ({ user }: { user: User }) => {
   return (
     <DropdownMenu>
       <TooltipProvider>
