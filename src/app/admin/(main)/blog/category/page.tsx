@@ -25,7 +25,7 @@ const PostCategoriesPage = () => {
       ]}
     >
       <div className="flex items-center justify-between">
-        <CardTitle>รายการหมวดหมู่สินค้า</CardTitle>
+        <CardTitle>รายการหมวดหมู่บทความ</CardTitle>
         <Link href="/admin/blog/category/new" className={buttonVariants()}>
           <Plus className="h-4 w-4 md:mr-2" />
           <span className="hidden md:block">สร้างใหม่</span>

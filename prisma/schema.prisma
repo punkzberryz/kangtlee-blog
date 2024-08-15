@@ -83,7 +83,7 @@ model TagsOnPosts {
 model Comment {
   id        String   @id @default(cuid())
   postId    Int
-  Post      Post     @relation(fields: [postId], references: [id])
+  Post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   comment   String   @db.VarChar(255)
   name      String
   email     String
