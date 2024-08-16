@@ -1,32 +1,25 @@
 "use client";
 
-import { FieldErrors, useForm } from "react-hook-form";
-import { postSchema, PostSchema } from "../../_components/post-schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { FieldErrors } from "react-hook-form";
+import { PostSchema } from "../../_components/post-schema";
+import { Form } from "@/components/ui/form";
 import { CustomInputField } from "@/components/custom-form-fields";
 import {
   CustomCheckboxField,
   CustomCheckboxWrapper,
 } from "@/components/custom-form-fields/custom-checkbox-field";
-import { Editor } from "@/components/editor/editor";
 import { ImageUrlField } from "./image-url-field";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
-import { usePostStore } from "@/app/hooks/use-post-store";
-import { createPost } from "../../_components/post-action";
-import { toast } from "react-toastify";
-import { Post, PostCategory, PostTag } from "@prisma/client";
+import { PostCategory, PostTag } from "@prisma/client";
 import { CustomSelectBoxField } from "@/components/custom-form-fields/custom-select-field";
 import { CustomTextAreaField } from "@/components/custom-form-fields/custom-textarea-field";
 import { FetchPostById } from "../../_components/fetch-data";
+import { EditorField } from "./editor-field";
+import { useBlogForm } from "./use-blog-form";
+import { TrashIcon } from "lucide-react";
+import { useEditorStore } from "@/components/editor";
+import { LoadingBars } from "@/components/ui/loading-bars";
+import { toast } from "react-toastify";
 
 interface BlogFormProps {
   isNew?: boolean;
@@ -42,18 +35,19 @@ export const BlogForm = ({
   title,
   isNew,
 }: BlogFormProps) => {
-  const { form, onSubmit, saveStatus, setSaveStatus } = useBlogState({
+  const { form, onSubmit, loading, router } = useBlogForm({
     initialData,
+    isNew,
   });
-  const { post } = usePostStore();
-  useEffect(() => {
-    if (!post.htmlContent || !isNew) return;
-    if (isNew) {
-      form.setValue("htmlContent", post.htmlContent);
-    }
-  }, [post.htmlContent, isNew, form]);
+  const { isUnsaved } = useEditorStore();
+
   return (
     <>
+      {/* Title */}
+      <div className="flex items-center space-x-4">
+        <h1 className="font-semibold md:text-3xl">{title}</h1>
+      </div>
+      {/* Form */}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, onSubmitError)}>
           <div className="space-y-4">
@@ -107,69 +101,36 @@ export const BlogForm = ({
                 name="isPublished"
               />
             </CustomCheckboxWrapper>
-            <FormField
-              control={form.control}
-              name="htmlContent"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Body</FormLabel>
-                  <FormControl>
-                    <Editor
-                      onUpdate={field.onChange}
-                      saveStatus={saveStatus}
-                      setSaveStatus={setSaveStatus}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+            <EditorField
+              form={form}
+              initialContent={initialData?.content}
+              isNew={isNew}
             />
           </div>
-          <Button
-            className="w-full lg:w-fit"
-            disabled={saveStatus === "Unsaved"}
-          >
-            Submit
-          </Button>
+          <div className="flex flex-col gap-4 md:flex-row-reverse">
+            <Button
+              type="submit"
+              className="min-w-[150px]"
+              disabled={loading || isUnsaved}
+            >
+              {loading ? <LoadingBars /> : isNew ? "สร้าง" : "บันทึก"}
+            </Button>
+            <Button
+              className="min-w-[150px]"
+              variant="secondary"
+              onClick={() => router.push("/admin/blog")}
+              disabled={loading}
+              type="button"
+            >
+              ยกเลิก
+            </Button>
+          </div>
         </form>
       </Form>
     </>
   );
 };
 
-const useBlogState = ({
-  initialData,
-}: {
-  initialData: FetchPostById | null;
-}) => {
-  const { setPost } = usePostStore();
-  const [saveStatus, setSaveStatus] = useState<"Saved" | "Unsaved">("Saved");
-  const form = useForm<PostSchema>({
-    resolver: zodResolver(postSchema),
-    //TODO: a bug where on initial load, htmlContent is empty while cache is not
-    defaultValues: {
-      description: initialData?.description || "",
-      title: initialData?.title || "",
-      htmlContent: initialData?.content || "",
-      keywords: initialData?.keywords || "",
-      categoryId: initialData?.categoryId.toString() || "",
-      tagIds: initialData?.tags.map((t) => t.id.toString()) || [],
-      isPublished: initialData?.isPublished || false,
-      imgUrl: initialData?.imgUrl || "",
-    },
-  });
-  const onSubmit = async (data: PostSchema) => {
-    const { error, post } = await createPost({ data });
-    if (error) {
-      console.error({ error });
-      toast.error("เกิดข้อผิดพลาดในการสร้างบทความ");
-      return;
-    }
-    toast.success("สร้างบทความสำเร็จ");
-    console.log({ post });
-    setPost({ htmlContent: "" });
-  };
-  return { form, onSubmit, saveStatus, setSaveStatus };
+const onSubmitError = (err: FieldErrors<PostSchema>) => {
+  toast.error("กรุณากรอกข้อมูลให้ครบถ้วน");
 };
-
-const onSubmitError = (err: FieldErrors<PostSchema>) => {};

@@ -25,6 +25,7 @@ import { UploadImagesPlugin } from "novel/plugins";
 
 import { cx } from "class-variance-authority";
 import { common, createLowlight } from "lowlight";
+import { slashCommand } from "./slash-command";
 
 const aiHighlight = AIHighlight;
 //You can overwrite the placeholder with your own configuration
@@ -38,6 +39,7 @@ const tiptapLink = TiptapLink.configure({
 });
 
 const tiptapImage = TiptapImage.extend({
+  name: "tiptap-image-extended",
   addProseMirrorPlugins() {
     return [
       UploadImagesPlugin({
@@ -149,7 +151,7 @@ const mathematics = Mathematics.configure({
 
 const characterCount = CharacterCount.configure();
 
-export const defaultExtensions = [
+const defaultExtensions = [
   starterKit,
   placeholder,
   tiptapLink,
@@ -172,3 +174,4 @@ export const defaultExtensions = [
   CustomKeymap,
   GlobalDragHandle,
 ];
+export const extensions = [...defaultExtensions, slashCommand];
