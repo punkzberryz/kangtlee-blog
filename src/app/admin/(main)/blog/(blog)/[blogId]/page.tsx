@@ -32,7 +32,6 @@ const NewBlogPage = async ({ params }: BlogByIdPageProps) => {
           title: `${isNew ? "New" : "Edit"} Blog`,
         },
       ]}
-      options={{ hasMaxWidth: true }}
     >
       <FetchData blogId={blogId} title={title} isNew={isNew} />
 

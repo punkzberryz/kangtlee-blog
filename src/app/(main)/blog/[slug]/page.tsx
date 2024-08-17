@@ -36,11 +36,15 @@ export async function generateMetadata({
   }
   const { title, keywords, description, imgUrl } = post;
   return {
-    title,
+    title: {
+      absolute: title,
+    },
     description,
     keywords,
     openGraph: {
-      title,
+      title: {
+        absolute: title,
+      },
       description,
       url: config.baseUrl + "/blog/" + slug,
       siteName: "KangTLee Blog",
@@ -56,7 +60,18 @@ export async function generateMetadata({
       ],
     },
     twitter: {
-      title,
+      title: {
+        absolute: title,
+      },
+      description,
+      images: [
+        {
+          url: imgUrl,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
       card: "summary_large_image",
       creator: "@KangTLee1",
     },

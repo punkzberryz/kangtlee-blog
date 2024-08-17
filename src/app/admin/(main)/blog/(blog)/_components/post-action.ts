@@ -20,13 +20,15 @@ export const createPostAction = async ({ data }: { data: PostSchema }) => {
     const { user } = await validateRequest();
     if (!user)
       throw new UnauthorizedError(UnauthorizedMessageCode.notAuthorized);
-    const { description, htmlContent, isPublished, keywords, title, imgUrl } =
-      data;
-    const slug = title
-      .toLowerCase() // Convert to lowercase
-      .replace(/[^a-z0-9\s]/g, "") // Remove special characters
-      .trim() // Trim whitespace from both ends
-      .replace(/\s+/g, "_"); // Replace spaces with underscores
+    const {
+      description,
+      htmlContent,
+      isPublished,
+      keywords,
+      title,
+      imgUrl,
+      slug,
+    } = data;
     const post = await db.post.create({
       data: {
         title,
@@ -68,8 +70,15 @@ export const editPostAction = async ({
     const { user } = await validateRequest();
     if (!user)
       throw new UnauthorizedError(UnauthorizedMessageCode.notAuthorized);
-    const { description, htmlContent, isPublished, keywords, title, imgUrl } =
-      data;
+    const {
+      description,
+      htmlContent,
+      isPublished,
+      keywords,
+      title,
+      imgUrl,
+      slug,
+    } = data;
     //edit post
     const post = await db.$transaction(async (tx) => {
       //first delete all tags on post
@@ -88,6 +97,7 @@ export const editPostAction = async ({
           content: htmlContent,
           imgUrl,
           categoryId,
+          slug,
           TagsOnPosts: {
             createMany: {
               data: [...tagIds.map((id) => ({ tagId: id }))],
@@ -127,15 +137,15 @@ export const getManyPostAction = async ({
     // Validate user
     const userReq = validateRequest();
     // Get posts
-    const postReq = db.post.findMany({
+    const postsReq = db.post.findMany({
       skip: (pageId - 1) * limit,
       take: limit,
       orderBy: { id: "desc" },
     });
-    const [post, { user }] = await Promise.all([postReq, userReq]);
+    const [posts, { user }] = await Promise.all([postsReq, userReq]);
     if (!user)
       throw new UnauthorizedError(UnauthorizedMessageCode.notAuthorized);
-    return { post };
+    return { posts };
   } catch (err) {
     const error = catchErrorForServerActionHelper(err);
     return { error };

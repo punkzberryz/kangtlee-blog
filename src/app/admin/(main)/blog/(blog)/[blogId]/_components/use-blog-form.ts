@@ -28,6 +28,7 @@ export const useBlogForm = ({
     defaultValues: {
       description: initialData?.description || "",
       title: initialData?.title || "",
+      slug: initialData?.slug || "",
       htmlContent: initialData?.content || "",
       keywords: initialData?.keywords || "",
       categoryId: initialData?.categoryId.toString() || "",

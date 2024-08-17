@@ -65,7 +65,7 @@ export const AuthButton = ({ user }: { user: User }) => {
 
           <DropdownMenuItem className="hover:cursor-pointer" asChild>
             <Link
-              href={`/admin/staff/${user.id}`}
+              href={`/admin/author/${user.id}`}
               className="flex items-center"
             >
               <UserIcon className="mr-3 h-4 w-4 text-muted-foreground" />

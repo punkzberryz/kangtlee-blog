@@ -1,7 +1,6 @@
 "use client";
 
 import { Control } from "react-hook-form";
-import { PostSchema } from "../../_components/post-schema";
 import {
   FormControl,
   FormField,
@@ -21,11 +20,12 @@ import { Input } from "@/components/ui/input";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { AuthorSchema } from "../../_components/author-schema";
 
 export const ImageUrlField = ({
   control,
 }: {
-  control: Control<PostSchema>;
+  control: Control<AuthorSchema>;
 }) => {
   return (
     <FormField
@@ -78,14 +78,14 @@ const UPLOAD_INSTRUCTION = [
       <p>
         ตัดและตกแต่งรูปด้วย
         <Link
-          href="https://www.canva.com/design/DAGOHCPzPiQ/q4gD4pA6lAwv_Lh4cKj49w/edit?utm_content=DAGOHCPzPiQ&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+          href="https://www.canva.com/design/DAGIlAGKPJc/7SxW4rTv9dVQkfDS3YAbwA/edit?utm_content=DAGIlAGKPJc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
           target="_blank"
           rel="noopener noreferrer"
           className={buttonVariants({ variant: "link" })}
         >
           Canva
         </Link>
-        เพื่อให้ได้ขนาด 1200x630 px
+        เพื่อให้ได้ขนาด 377x377 px
       </p>
     ),
   },

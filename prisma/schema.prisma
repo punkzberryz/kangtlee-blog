@@ -19,6 +19,8 @@ model User {
   googleId    String?   @unique
   lineLoginId String?   @unique
   displayName String
+  bio         String?
+  imgUrl      String?
   sessions    Session[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt

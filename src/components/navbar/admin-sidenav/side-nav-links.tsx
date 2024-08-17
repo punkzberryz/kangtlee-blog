@@ -1,6 +1,12 @@
 "use client";
 
-import { LayoutDashboard, LucideIcon, NewspaperIcon } from "lucide-react";
+import {
+  LayoutDashboard,
+  LucideIcon,
+  NewspaperIcon,
+  User2,
+  Users2,
+} from "lucide-react";
 import { useToggleSideNav } from "./use-toggle-sidenav";
 import { SignOutButton } from "../signout-button";
 import Link from "next/link";
@@ -53,6 +59,11 @@ const ADMIN_LINKS: LinkProps[] = [
         href: "/admin/blog/tag",
       },
     ],
+  },
+  {
+    href: "/admin/author",
+    label: "จัดการผู้เขียน",
+    icon: Users2,
   },
 ];
 

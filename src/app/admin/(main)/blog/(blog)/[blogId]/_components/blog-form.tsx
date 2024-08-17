@@ -16,10 +16,10 @@ import { CustomTextAreaField } from "@/components/custom-form-fields/custom-text
 import { FetchPostById } from "../../_components/fetch-data";
 import { EditorField } from "./editor-field";
 import { useBlogForm } from "./use-blog-form";
-import { TrashIcon } from "lucide-react";
 import { useEditorStore } from "@/components/editor";
 import { LoadingBars } from "@/components/ui/loading-bars";
 import { toast } from "react-toastify";
+import { SlugField } from "./slug-field";
 
 interface BlogFormProps {
   isNew?: boolean;
@@ -40,7 +40,9 @@ export const BlogForm = ({
     isNew,
   });
   const { isUnsaved } = useEditorStore();
-
+  //TODO: keywords field, split words by comma
+  //TODO: description,title max word
+  //TODO: image upload info
   return (
     <>
       {/* Title */}
@@ -56,10 +58,16 @@ export const BlogForm = ({
               name="title"
               label="Title"
             />
+
             <CustomTextAreaField
               control={form.control}
               name="description"
               label="Description"
+            />
+            <CustomInputField
+              control={form.control}
+              name="slug"
+              label="Link บทความ"
             />
             <CustomInputField
               control={form.control}
