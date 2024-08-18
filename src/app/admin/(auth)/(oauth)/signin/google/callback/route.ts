@@ -128,6 +128,7 @@ export async function GET(req: NextRequest) {
         status: 400,
       });
     }
+    console.error(err);
     return NextResponse.json(null, {
       status: 500,
     });

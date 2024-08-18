@@ -10,7 +10,7 @@ export const BlogPreviewItem = ({ post }: BlogPreviewItemProps) => {
   const href = `/blog/${post.slug}`;
 
   return (
-    <li className="group flex w-[350px] flex-col items-center gap-4 overflow-clip rounded-xl border shadow-xl">
+    <li className="group flex w-[350px] flex-col items-center gap-4 overflow-clip rounded-xl border shadow-xl dark:border-primary dark:shadow-primary/30">
       <Link href={href}>
         <Image
           className="aspect-[4/3] w-[350px] rounded-none object-cover"
@@ -26,7 +26,7 @@ export const BlogPreviewItem = ({ post }: BlogPreviewItemProps) => {
         </Link>
         <div className="relative h-24 overflow-hidden">
           <div
-            className="absolute bottom-0 h-1/2 w-full bg-gradient-to-b from-transparent to-white"
+            className="absolute bottom-0 h-1/2 w-full bg-gradient-to-b from-transparent to-background"
             aria-hidden
           ></div>
           <p className="text-base leading-snug">{post.description}</p>

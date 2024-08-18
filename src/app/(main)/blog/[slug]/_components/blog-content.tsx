@@ -58,7 +58,7 @@ const AuthorCard = ({ author }: { author: GetPostResponse["author"] }) => {
   if (!author) return null;
   return (
     <div className="w-full px-12">
-      <div className="flex w-full gap-4 rounded-md border p-10 shadow-md">
+      <div className="flex w-full gap-4 rounded-md border p-10 shadow-md dark:border-primary dark:shadow-lg dark:shadow-primary">
         {author.imgUrl ? (
           <Image
             alt={author.displayName}
