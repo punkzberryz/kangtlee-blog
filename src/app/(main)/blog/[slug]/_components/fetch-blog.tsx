@@ -28,8 +28,6 @@ const FetchBlogAsync = async ({ slug }: FetchBlogProps) => {
   if (!post.content) {
     return notFound();
   }
-  console.log("found post!!");
-  // console.log({ post });
 
   return <BlogContent post={post} />;
 };

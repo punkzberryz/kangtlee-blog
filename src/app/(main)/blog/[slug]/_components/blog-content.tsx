@@ -1,4 +1,3 @@
-import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { GetPostResponse } from "../../_components/fetch-post";
@@ -12,36 +11,34 @@ interface BlogContentProps {
 }
 export const BlogContent = ({ post }: BlogContentProps) => {
   return (
-    <MaxWidthWrapper className="pt-10">
-      <div className="mx-auto flex max-w-screen-lg flex-col items-center gap-8">
-        <header className="flex flex-col items-center gap-4">
-          <h1 className="text-center text-4xl font-bold">{post.title}</h1>
-          <div className="flex items-center space-x-2">
-            <AuthorAvatar author={post.author} />
-            <DotIcon className="h-6 w-6" />
-            <div className="text-center text-sm text-gray-500">
-              อัพเดทล่าสุดวันที่ {formatDateToThaiDate(post.updatedAt)}
-            </div>
+    <div className="mx-auto flex max-w-screen-lg flex-col items-center gap-8">
+      <header className="flex flex-col items-center gap-4">
+        <h1 className="text-center text-4xl font-bold">{post.title}</h1>
+        <div className="flex items-center space-x-2">
+          <AuthorAvatar author={post.author} />
+          <DotIcon className="h-6 w-6" />
+          <div className="text-center text-sm text-gray-500">
+            อัพเดทล่าสุดวันที่ {formatDateToThaiDate(post.updatedAt)}
           </div>
-        </header>
-        {/* Hero-image */}
-        <div className="mx-12 w-fit overflow-hidden rounded-lg">
-          <Image alt={post.title} src={post.imgUrl} height={630} width={1200} />
         </div>
-        {/* Body */}
-        <div
-          dangerouslySetInnerHTML={{ __html: post.content }}
-          className={cn(
-            "ProseMirror",
-            "prose-headings:font-title font-default prose prose-lg dark:prose-invert focus:outline-none",
-            "mx-auto max-w-screen-lg",
-          )}
-        ></div>
-        {/* Author Card */}
-
-        <AuthorCard author={post.author} />
+      </header>
+      {/* Hero-image */}
+      <div className="mx-12 w-fit overflow-hidden rounded-lg">
+        <Image alt={post.title} src={post.imgUrl} height={630} width={1200} />
       </div>
-    </MaxWidthWrapper>
+      {/* Body */}
+      <div
+        dangerouslySetInnerHTML={{ __html: post.content }}
+        className={cn(
+          "ProseMirror",
+          "prose-headings:font-title font-default prose prose-lg dark:prose-invert focus:outline-none",
+          "mx-auto max-w-screen-lg",
+        )}
+      ></div>
+      {/* Author Card */}
+
+      <AuthorCard author={post.author} />
+    </div>
   );
 };
 
