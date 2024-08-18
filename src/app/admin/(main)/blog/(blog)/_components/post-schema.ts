@@ -13,7 +13,12 @@ export const postSchema = z.object({
   keywords: z.string(),
   htmlContent: z.string(),
   isPublished: z.boolean(),
-  imgUrl: z.string().min(1, { message: "Image is required" }),
+  imgUrl: z
+    .string()
+    .min(1, { message: "Image is required" })
+    .regex(/https?:\/\/.*.pic\.in\.th\/.*\.(?:png|jpg|jpeg|webp|svg)/, {
+      message: "Url ที่ใช้จะต้องเป็นรูปจาก pic.in.th เท่านั้น",
+    }),
   categoryId: z.string().min(1, { message: "category is required" }),
   tagIds: z.array(z.string()).default([]),
 });

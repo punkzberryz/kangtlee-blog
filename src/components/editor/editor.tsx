@@ -28,6 +28,9 @@ import { generateJSON } from "@tiptap/html";
 import { useEditorStore } from "./use-editor-store";
 import { useIsMounted } from "@/app/hooks/use-is-mounted";
 import { Skeleton } from "../ui/skeleton";
+import { ImageIcon } from "lucide-react";
+import { AddImageDialog } from "./add-image-dialog";
+import { useAddImageEditorDialog } from "./use-add-image-editor-dialog-store";
 
 interface EditorProps {
   onUpdate: (htmlContent: string) => void;
@@ -54,8 +57,9 @@ export const Editor = ({
   } = useEditorState({ initialHTMLContent, onUpdate, blogIsNew });
 
   const { jsonContent: jsonCacheContent } = useEditorStore();
-
+  const { setOpen } = useAddImageEditorDialog();
   const isMounted = useIsMounted();
+
   if (!isMounted) return <EditorSkeleton />;
 
   return (
@@ -107,6 +111,25 @@ export const Editor = ({
                 </div>
               </EditorCommandItem>
             ))}
+            <EditorCommandItem
+              value="Add Image"
+              onCommand={({ editor, range }) => {
+                setOpen(true);
+                editor.chain().focus().deleteRange(range).run();
+              }}
+              className="flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm hover:bg-accent aria-selected:bg-accent"
+              key="Add Image"
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-md border border-muted bg-background">
+                <ImageIcon size={18} />
+              </div>
+              <div>
+                <p className="font-medium">Image</p>
+                <p className="text-xs text-muted-foreground">
+                  Add Image from URL.
+                </p>
+              </div>
+            </EditorCommandItem>
           </EditorCommandList>
         </EditorCommand>
         <ToolbarBubble>
@@ -120,6 +143,7 @@ export const Editor = ({
           <Separator orientation="vertical" />
           <ColorSelector open={openColor} onOpenChange={setOpenColor} />
         </ToolbarBubble>
+        <AddImageDialog />
       </EditorContent>
     </EditorRoot>
   );

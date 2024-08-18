@@ -6,7 +6,7 @@ import { formatDateToThaiDate } from "@/lib/format/format-date";
 import { DotIcon } from "lucide-react";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
-
+import "./blog.css";
 interface BlogContentProps {
   post: GetPostResponse;
 }
@@ -38,6 +38,7 @@ export const BlogContent = ({ post }: BlogContentProps) => {
           )}
         ></div>
         {/* Author Card */}
+
         <AuthorCard author={post.author} />
       </div>
     </MaxWidthWrapper>
@@ -59,21 +60,25 @@ const AuthorAvatar = ({ author }: { author: GetPostResponse["author"] }) => {
 const AuthorCard = ({ author }: { author: GetPostResponse["author"] }) => {
   if (!author) return null;
   return (
-    <div className="flex gap-4 rounded-md border p-10 shadow-md">
-      {author.imgUrl ? (
-        <Image
-          alt={author.displayName}
-          src={author.imgUrl}
-          height={100}
-          width={100}
-        />
-      ) : (
-        <div className="h-[100px] w-[100px]"></div>
-      )}
-      <div>
-        <Separator className="my-4" />
-        <h2>{author.displayName}</h2>
-        <p>{author.bio}</p>
+    <div className="w-full px-12">
+      <div className="flex w-full gap-4 rounded-md border p-10 shadow-md">
+        {author.imgUrl ? (
+          <Image
+            alt={author.displayName}
+            src={author.imgUrl}
+            height={100}
+            width={100}
+          />
+        ) : (
+          <div className="h-[100px] w-[100px]"></div>
+        )}
+        <div>
+          <div className="w-fit">
+            <Separator className="my-4 border-2 border-primary" />
+            <h2>{author.displayName}</h2>
+          </div>
+          <p>{author.bio}</p>
+        </div>
       </div>
     </div>
   );

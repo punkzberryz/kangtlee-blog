@@ -38,27 +38,34 @@ const tiptapLink = TiptapLink.configure({
   },
 });
 
-const tiptapImage = TiptapImage.extend({
-  name: "tiptap-image-extended",
-  addProseMirrorPlugins() {
-    return [
-      UploadImagesPlugin({
-        imageClass: cx("opacity-40 rounded-lg border border-stone-200"),
-      }),
-    ];
-  },
-}).configure({
+const tiptapImageDefault = TiptapImage.configure({
   allowBase64: true,
   HTMLAttributes: {
     class: cx("rounded-lg border border-muted"),
   },
 });
 
-const updatedImage = UpdatedImage.configure({
-  HTMLAttributes: {
-    class: cx("rounded-lg border border-muted"),
-  },
-});
+// const tiptapImage = TiptapImage.extend({
+//   name: "tiptap-image-extended",
+//   addProseMirrorPlugins() {
+//     return [
+//       UploadImagesPlugin({
+//         imageClass: cx("opacity-40 rounded-lg border border-stone-200"),
+//       }),
+//     ];
+//   },
+// }).configure({
+//   allowBase64: true,
+//   HTMLAttributes: {
+//     class: cx("rounded-lg border border-muted"),
+//   },
+// });
+
+// const updatedImage = UpdatedImage.configure({
+//   HTMLAttributes: {
+//     class: cx("rounded-lg border border-muted"),
+//   },
+// });
 
 const taskList = TaskList.configure({
   HTMLAttributes: {
@@ -155,8 +162,9 @@ const defaultExtensions = [
   starterKit,
   placeholder,
   tiptapLink,
-  tiptapImage,
-  updatedImage,
+  tiptapImageDefault,
+  // tiptapImage,
+  // updatedImage,
   taskList,
   taskItem,
   horizontalRule,

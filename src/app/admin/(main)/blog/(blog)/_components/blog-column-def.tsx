@@ -36,7 +36,11 @@ export const blogColumnDef: ColumnDef<Post>[] = [
     accessorKey: "link",
     cell: ({ row }) => (
       <Button className="-my-2 h-8 rounded-md px-2" asChild variant="secondary">
-        <Link href={`/blog/${row.original.slug}`}>
+        <Link
+          href={`/blog/${row.original.slug}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <ArrowUpRightFromSquare className="h-3 w-3" />
         </Link>
       </Button>

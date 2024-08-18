@@ -132,27 +132,46 @@ export const suggestionItems = createSuggestionItems([
     command: ({ editor, range }) =>
       editor.chain().focus().deleteRange(range).toggleCodeBlock().run(),
   },
-  {
-    title: "Image",
-    description: "Upload an image from your computer.",
-    searchTerms: ["photo", "picture", "media"],
-    icon: <ImageIcon size={18} />,
-    command: ({ editor, range }) => {
-      editor.chain().focus().deleteRange(range).run();
-      // upload image
-      const input = document.createElement("input");
-      input.type = "file";
-      input.accept = "image/*";
-      input.onchange = async () => {
-        if (input.files?.length) {
-          const file = input.files[0];
-          const pos = editor.view.state.selection.from;
-          uploadFn(file, editor.view, pos);
-        }
-      };
-      input.click();
-    },
-  },
+  // {
+  //   title: "Image",
+  //   description: "Upload an image from your computer.",
+  //   searchTerms: ["photo", "picture", "media"],
+  //   icon: <ImageIcon size={18} />,
+  //   command: ({ editor, range }) => {
+  //     editor.chain().focus().deleteRange(range).run();
+  //     // upload image
+  //     const input = document.createElement("input");
+  //     input.type = "file";
+  //     input.accept = "image/*";
+  //     input.onchange = async () => {
+  //       if (input.files?.length) {
+  //         const file = input.files[0];
+  //         const pos = editor.view.state.selection.from;
+  //         uploadFn(file, editor.view, pos);
+  //       }
+  //     };
+  //     input.click();
+  //   },
+  // },
+  // {
+  //   title: "Image",
+  //   description: "Add Image from URL.",
+  //   searchTerms: ["photo", "picture", "media"],
+  //   icon: <ImageIcon size={18} />,
+  //   command: ({ editor, range }) => {
+  //     const url = prompt("เพิ่มรูปจาก Url จาก pic.in.th") ?? "";
+  //     const urlRegex = new RegExp(
+  //       /https?:\/\/.*.pic\.in\.th\/.*\.(?:png|jpg|jpeg|webp|svg)/,
+  //     );
+  //     if (urlRegex.test(url)) {
+  //       editor.chain().focus().setImage({ src: url }).run();
+  //     } else {
+  //       if (url !== null && url !== "") {
+  //         alert("กรุณาใส่ Url จาก pic.in.th เท่านั้น");
+  //       }
+  //     }
+  //   },
+  // },
   {
     title: "Youtube",
     description: "Embed a Youtube video.",
