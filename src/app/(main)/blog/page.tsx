@@ -1,12 +1,14 @@
 import { db } from "@/lib/db";
+import { Metadata } from "next";
 import { unstable_noStore } from "next/cache";
-import Link from "next/link";
 import { Suspense } from "react";
+import { BlogPreviewItem } from "./_components/blog-preview-item";
+import { getPosts } from "./_components/fetch-post";
 
 const BlogsPage = () => {
   return (
-    <div>
-      <h1>Blog page</h1>
+    <div className="space-y-10">
+      <h1>บทความ</h1>
       <Suspense fallback={<div>Loading...</div>}>
         <AsyncBlogPages />
       </Suspense>
@@ -16,15 +18,19 @@ const BlogsPage = () => {
 
 const AsyncBlogPages = async () => {
   unstable_noStore();
-  const posts = await db.post.findMany();
+  // const posts = await db.post.findMany();
+  const { posts } = await getPosts({ includeNotPublished: true });
+  if (!posts) return;
   return (
-    <div className="flex flex-col">
+    <ul className="flex flex-wrap gap-8">
       {posts.map((post) => (
-        <Link key={post.id} href={`/blog/${post.slug}`}>
-          <h1>{post.title}</h1>
-        </Link>
+        <BlogPreviewItem key={post.id} post={post} />
       ))}
-    </div>
+    </ul>
   );
 };
 export default BlogsPage;
+export const metadata: Metadata = {
+  title: "บทความ",
+  description: "บทความทั้งหมด",
+};

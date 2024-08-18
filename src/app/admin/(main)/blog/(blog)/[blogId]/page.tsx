@@ -1,4 +1,3 @@
-import { getPost } from "@/app/(main)/blog/_components/fetch-post";
 import { PageWrapper } from "@/components/navbar/admin-sidenav/page-wrapper";
 import { BadRequestError } from "@/lib/error";
 import { FetchData } from "./_components/fetch-data";
@@ -13,11 +12,9 @@ const NewBlogPage = async ({ params }: BlogByIdPageProps) => {
   const blogId = isNew ? 0 : parseInt(params.blogId);
   if (isNaN(blogId)) throw new BadRequestError();
 
-  const post = await getPost("welcome");
-
   return (
     <PageWrapper
-      title="เขียนบทความ | Write new blog"
+      title={title}
       links={[
         {
           href: "/admin",
@@ -34,8 +31,6 @@ const NewBlogPage = async ({ params }: BlogByIdPageProps) => {
       ]}
     >
       <FetchData blogId={blogId} title={title} isNew={isNew} />
-
-      <div>{/* <UploadNewBlog /> */}</div>
     </PageWrapper>
   );
 };

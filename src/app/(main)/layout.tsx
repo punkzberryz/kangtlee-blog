@@ -1,3 +1,4 @@
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { Navbar } from "@/components/navbar";
 import React from "react";
 
@@ -5,7 +6,9 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Navbar />
-      {children}
+      <main className="min-h-[calc(100vh-56px)]">
+        <MaxWidthWrapper className="pt-10">{children}</MaxWidthWrapper>
+      </main>
     </>
   );
 };

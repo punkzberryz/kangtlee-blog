@@ -13,7 +13,7 @@ export const BlogContent = ({ post }: BlogContentProps) => {
   return (
     <div className="mx-auto flex max-w-screen-lg flex-col items-center gap-8">
       <header className="flex flex-col items-center gap-4">
-        <h1 className="text-center text-4xl font-bold">{post.title}</h1>
+        <h1 className="text-center font-bold">{post.title}</h1>
         <div className="flex items-center space-x-2">
           <AuthorAvatar author={post.author} />
           <DotIcon className="h-6 w-6" />

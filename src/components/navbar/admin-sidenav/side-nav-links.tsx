@@ -45,11 +45,11 @@ const ADMIN_LINKS: LinkProps[] = [
     label: "จัดการบทความ",
     icon: NewspaperIcon,
     sublinks: [
+      { label: "จัดการบทความทั้งหมด", href: "/admin/blog" },
       {
         label: "เขียนบทความ",
         href: "/admin/blog/new",
       },
-      { label: "จัดการบทความทั้งหมด", href: "/admin/blog" },
       {
         label: "จัดการหมวดหมู่",
         href: "/admin/blog/category",
@@ -161,7 +161,9 @@ const ItemUi = ({
   return (
     <div className="mx-4 flex w-full items-center">
       <Icon className="mr-3 h-6 w-6" />
-      <span hidden={!isExpanded}>{label}</span>
+      <span className="text-sm" hidden={!isExpanded}>
+        {label}
+      </span>
     </div>
   );
 };
