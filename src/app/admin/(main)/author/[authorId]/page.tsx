@@ -15,9 +15,8 @@ const AuthorByIdPage = ({ params }: AuthorByIdPageProps) => {
           href: "/admin",
           title: "Dashboard",
         },
-
         {
-          href: "/admin/Author",
+          href: "/admin/author",
           title: "Author",
         },
         {

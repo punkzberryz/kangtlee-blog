@@ -73,6 +73,7 @@ export const BlogForm = ({
               control={form.control}
               name="keywords"
               label="Keywords"
+              placeholder=""
             />
             <ImageUrlField control={form.control} />
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

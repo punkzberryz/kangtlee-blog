@@ -27,12 +27,9 @@ export const getSessionId = () => {
   return cookies().get(lucia.sessionCookieName)?.value;
 };
 
-export const validateRequest = cache(async (sessionIdFromAuth?: string) => {
+export const validateRequest = cache(async () => {
   let sessionId = getSessionId() ?? null;
-  if (sessionIdFromAuth) {
-    sessionId = sessionIdFromAuth;
-  }
-  console.log(`[validateRequest] sessionId: ${sessionId}`);
+  // console.log(`[validateRequest] sessionId: ${sessionId}`);
   if (!sessionId) {
     return {
       user: null,

@@ -78,7 +78,7 @@ const PageHeader = ({
           <SideNavbarToggleButton />
           <SideNavbarMobileView />
         </>
-        <h1 className="hidden md:block">{title}</h1>
+        <h1 className="hidden font-semibold md:block md:text-3xl">{title}</h1>
         {/* User Button */}
         <div className="flex-1">
           <div className="ml-auto mr-4 flex w-fit items-center space-x-2">
