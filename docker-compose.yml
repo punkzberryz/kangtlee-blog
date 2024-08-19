@@ -1,18 +1,37 @@
-version: "3.9"
+# version: "3.9"
 name: kangtlee-blog
 services:
-  postgres:
-    image: postgres:16.3-alpine3.20
-    ports:
-      - "${DB_PORT}:${DB_PORT}"
-    volumes:
-      - ./pg-db:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
+  next-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # args:
+      #   ENV_VARIABLE: ${ENV_VARIABLE}
+      #   NEXT_PUBLIC_ENV_VARIABLE: ${NEXT_PUBLIC_ENV_VARIABLE}
     restart: always
-    container_name: ${DB_DOCKER_CONTAINER}
+    ports:
+      - 3000:3000
+    # networks:
+    #   - kangtlee_network
+# Add more containers below (nginx, postgres, etc.)
+# postgres:
+#   image: postgres:16.3-alpine3.20
+#   ports:
+#     - "${DB_PORT}:${DB_PORT}"
+#   volumes:
+#     - ./pg-db:/var/lib/postgresql/data
+#   environment:
+#     POSTGRES_USER: ${DB_USER}
+#     POSTGRES_PASSWORD: ${DB_PASSWORD}
+#     POSTGRES_DB: ${DB_NAME}
+#   restart: always
+#   container_name: ${DB_DOCKER_CONTAINER}
 
-volumes:
-  pg-db:
+# volumes:
+#   pg-db:
+
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+# networks:
+#   my_network:
+#     external: true
