@@ -1,5 +1,5 @@
 export const LINKS: LinkProps[] = [
-  { href: "/blog", label: "บทความ" },
+  { href: "/", label: "บทความ" },
   { href: "/contact", label: "ติดต่อเรา" },
 ];
 export const ADMIN_LINKS: LinkProps[] = [

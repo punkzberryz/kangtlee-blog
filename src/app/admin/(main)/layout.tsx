@@ -1,4 +1,3 @@
-import { AdminNavbar, Navbar } from "@/components/navbar";
 import { ClientSideNavWrapper } from "@/components/navbar/admin-sidenav/client-sidenav-wrapper";
 import { ReactNode } from "react";
 

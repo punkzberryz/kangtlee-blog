@@ -73,7 +73,7 @@ const PageHeader = ({
 }) => {
   return (
     <header className="flex flex-col space-y-4 pb-4 pt-2">
-      <MaxWidthWrapper className="flex items-center space-x-4 border-b pb-4 shadow-md">
+      <MaxWidthWrapper className="flex items-center space-x-4 border-b pb-4 shadow-md md:mx-0">
         <>
           <SideNavbarToggleButton />
           <SideNavbarMobileView />
@@ -89,7 +89,7 @@ const PageHeader = ({
       </MaxWidthWrapper>
       {/* Breadcrumbs */}
 
-      <MaxWidthWrapper className="pb-4">
+      <MaxWidthWrapper className="pb-4 md:mx-0 md:px-4">
         <Breadcrumb>
           <BreadcrumbList>
             {links.map((link, index) => (

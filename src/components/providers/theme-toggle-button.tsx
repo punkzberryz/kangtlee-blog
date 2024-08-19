@@ -9,7 +9,11 @@ import {
 } from "../ui/tooltip";
 import { Button } from "../ui/button";
 
-export const ThemeToggleButton = () => {
+export const ThemeToggleButton = ({
+  hideToolTip,
+}: {
+  hideToolTip?: boolean;
+}) => {
   const { setTheme, theme } = useTheme();
 
   return (
@@ -27,7 +31,9 @@ export const ThemeToggleButton = () => {
             <span className="sr-only">Switch Theme</span>
           </Button>
         </TooltipTrigger>
-        <TooltipContent side="bottom">เปลี่ยนธีมสี</TooltipContent>
+        <TooltipContent side="bottom" hidden={hideToolTip}>
+          เปลี่ยนธีมสี
+        </TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { User } from "lucia";
 import { Button } from "../ui/button";
-import { LayoutGrid, UserIcon } from "lucide-react";
+import { HomeIcon, LayoutGrid, UserIcon } from "lucide-react";
 import Link from "next/link";
 import { SignOutDropdownItem } from "./signout-button";
 export const AuthButton = ({ user }: { user: User }) => {
@@ -62,15 +62,19 @@ export const AuthButton = ({ user }: { user: User }) => {
               Dashboard
             </Link>
           </DropdownMenuItem>
-
           <DropdownMenuItem className="hover:cursor-pointer" asChild>
             <Link
               href={`/admin/author/${user.id}`}
               className="flex items-center"
             >
               <UserIcon className="mr-3 h-4 w-4 text-muted-foreground" />
-              {/* TODO: create account Page for Cashier */}
               Account
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem className="hover:cursor-pointer" asChild>
+            <Link href={"/"} className="flex items-center">
+              <HomeIcon className="mr-3 h-4 w-4 text-muted-foreground" />
+              Home
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>

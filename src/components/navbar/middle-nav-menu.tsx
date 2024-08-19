@@ -23,35 +23,13 @@ export const MiddleNavMenu = () => {
           key={index}
           href={link.href}
           label={link.label}
-          active={pathname.startsWith(link.href)}
+          active={
+            link.href === "/"
+              ? pathname === "/"
+              : pathname.startsWith(link.href)
+          }
         />
       ))}
-    </NavigationMenu>
-  );
-};
-
-export const AdminMiddleNavMenu = () => {
-  const pathname = usePathname();
-  return (
-    <NavigationMenu className="list-none space-x-4">
-      {ADMIN_LINKS.map((link, index) =>
-        link.sublinks ? (
-          <NavLinkWithSubLinks
-            key={index}
-            href={link.href}
-            label={link.label}
-            active={pathname.startsWith(link.href)}
-            sublinks={link.sublinks}
-          />
-        ) : (
-          <NavLink
-            key={index}
-            href={link.href}
-            label={link.label}
-            active={pathname.startsWith(link.href)}
-          />
-        ),
-      )}
     </NavigationMenu>
   );
 };

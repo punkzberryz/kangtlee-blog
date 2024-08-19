@@ -60,12 +60,15 @@ const AuthorCard = ({ author }: { author: GetPostResponse["author"] }) => {
     <div className="w-full px-12">
       <div className="flex w-full gap-4 rounded-md border p-10 shadow-md dark:border-primary dark:shadow-lg dark:shadow-primary">
         {author.imgUrl ? (
-          <Image
-            alt={author.displayName}
-            src={author.imgUrl}
-            height={100}
-            width={100}
-          />
+          <div className="mt-8 h-fit overflow-hidden rounded-md">
+            <Image
+              className="object-contain"
+              alt={author.displayName}
+              src={author.imgUrl}
+              height={100}
+              width={100}
+            />
+          </div>
         ) : (
           <div className="h-[100px] w-[100px]"></div>
         )}
