@@ -24,6 +24,7 @@ jobs:
           directory: .
       - name: check files
         run: ls -la
+      - name: cat env
         run: cat .env
       - uses: actions/checkout@v4
       - name: build image
