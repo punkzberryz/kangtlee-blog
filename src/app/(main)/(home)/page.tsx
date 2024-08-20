@@ -7,7 +7,7 @@ import { BlogPreviewItem } from "../blog/_components/blog-preview-item";
 const BlogsPage = () => {
   return (
     <div className="space-y-10">
-      <h1>บทความ2</h1>
+      <h1>บทความ3</h1>
       <Suspense fallback={<div>Loading...</div>}>
         <AsyncBlogPages />
       </Suspense>
