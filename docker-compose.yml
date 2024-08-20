@@ -4,16 +4,30 @@ services:
   next-app:
     build:
       context: .
-      dockerfile: Dockerfile
+      # dockerfile: Dockerfile
+    image:
+      ghcr.io/punkzberryz/kangtlee-blog:latest
       # args:
       #   ENV_VARIABLE: ${ENV_VARIABLE}
       #   NEXT_PUBLIC_ENV_VARIABLE: ${NEXT_PUBLIC_ENV_VARIABLE}
     restart: always
-    ports:
-      - 3000:3000
+    # ports:
+    #   - 3000:3000
     # networks:
     #   - kangtlee_network
-# Add more containers below (nginx, postgres, etc.)
+  # Add more containers below (nginx, postgres, etc.)
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./ssl:/etc/nginx/ssl
+    depends_on:
+      - next-app
+    restart: always
 # postgres:
 #   image: postgres:16.3-alpine3.20
 #   ports:

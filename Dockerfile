@@ -22,7 +22,7 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-ENV GENERATE_SOURCEMAP false
+# ENV GENERATE_SOURCEMAP false
 #see https://stackoverflow.com/questions/62663167/dockerizing-react-in-production-mode-fatal-error-ineffective-mark-compacts-nea
 
 # Next.js collects completely anonymous telemetry data about general usage.
