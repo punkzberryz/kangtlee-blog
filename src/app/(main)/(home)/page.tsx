@@ -7,7 +7,7 @@ import { BlogPreviewItem } from "../blog/_components/blog-preview-item";
 const BlogsPage = () => {
   return (
     <div className="space-y-10">
-      <h1>บทความ3</h1>
+      <h1>บทความ</h1>
       <Suspense fallback={<div>Loading...</div>}>
         <AsyncBlogPages />
       </Suspense>
@@ -18,7 +18,7 @@ const BlogsPage = () => {
 const AsyncBlogPages = async () => {
   unstable_noStore();
   // const posts = await db.post.findMany();
-  const { posts } = await getPosts({ includeNotPublished: true });
+  const { posts } = await getPosts({ includeNotPublished: false });
   if (!posts) return;
   return (
     <ul className="flex flex-wrap gap-8">

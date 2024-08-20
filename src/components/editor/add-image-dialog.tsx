@@ -21,7 +21,7 @@ const imageUrlSchema = z.object({
   url: z
     .string()
     .min(1)
-    .regex(/https?:\/\/.*.pic\.in\.th\/.*\.(?:png|jpg|jpeg|webp|svg)/, {
+    .regex(/https?:\/\/.*.pic\.in\.th\/.*\.(?:png|jpg|jpeg|webp|svg|gif)/, {
       message: "Url ที่ใช้จะต้องเป็นรูปจาก pic.in.th เท่านั้น",
     }),
 });
