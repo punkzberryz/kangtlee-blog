@@ -24,6 +24,7 @@ jobs:
           directory: .
       - name: check files
         run: ls -la
+        run: cat .env
       - uses: actions/checkout@v4
       - name: build image
         run: docker build . -t ghcr.io/punkzberryz/kangtlee-blog:latest
