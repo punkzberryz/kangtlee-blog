@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: build image
-        run: docker build -t ghcr.io/punkzberryz/kangtlee-blog:latest
+        run: docker build . -t ghcr.io/punkzberryz/kangtlee-blog:latest
       - name: Login to ghcr
         uses: docker/login-action@v2
         with:
