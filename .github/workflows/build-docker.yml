@@ -9,19 +9,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    - name: Make envfile
-      uses: SpicyPizza/create-envfile@v2.0
-      with:
-        envkey_DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        envkey_NEXT_PUBLIC_URL: ${{ secrets.NEXT_PUBLIC_URL }}
-        envkey_SIGNUP_ADMIN_SECRET: ${{ secrets.SIGNUP_ADMIN_SECRET }}
-        envkey_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-        envkey_GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-        envkey_GOOGLE_CALLBACK_URL: ${{ secrets.GOOGLE_CALLBACK_URL }}
-        envkey_MAILER_EMAIL: ${{ secrets.MAILER_EMAIL }}
-        envkey_MAILER_PASSWORD: ${{ secrets.MAILER_PASSWORD }}
-        
     steps:
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          envkey_DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          envkey_NEXT_PUBLIC_URL: ${{ secrets.NEXT_PUBLIC_URL }}
+          envkey_SIGNUP_ADMIN_SECRET: ${{ secrets.SIGNUP_ADMIN_SECRET }}
+          envkey_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          envkey_GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          envkey_GOOGLE_CALLBACK_URL: ${{ secrets.GOOGLE_CALLBACK_URL }}
+          envkey_MAILER_EMAIL: ${{ secrets.MAILER_EMAIL }}
+          envkey_MAILER_PASSWORD: ${{ secrets.MAILER_PASSWORD }}
       - uses: actions/checkout@v4
       - name: build image
         run: docker build . -t ghcr.io/punkzberryz/kangtlee-blog:latest
