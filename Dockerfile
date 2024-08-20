@@ -21,7 +21,9 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-
+RUN echo "Building the app"
+RUN ls -la
+RUN cat .env
 
 # Instead of copying .env, we'll use build arguments
 ARG DATABASE_URL
