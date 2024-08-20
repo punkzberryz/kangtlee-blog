@@ -21,10 +21,31 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-COPY .env .env
+
+
+# Instead of copying .env, we'll use build arguments
+ARG DATABASE_URL
+ARG NEXT_PUBLIC_URL
+ARG SIGNUP_ADMIN_SECRET
+ARG GOOGLE_CLIENT_ID
+ARG GOOGLE_CLIENT_SECRET
+ARG GOOGLE_CALLBACK_URL
+ARG MAILER_EMAIL
+ARG MAILER_PASSWORD
+
+# Create .env file from build arguments
+RUN echo "DATABASE_URL=${DATABASE_URL}" >> .env && \
+    echo "NEXT_PUBLIC_URL=${NEXT_PUBLIC_URL}" >> .env && \
+    echo "SIGNUP_ADMIN_SECRET=${SIGNUP_ADMIN_SECRET}" >> .env && \
+    echo "GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}" >> .env && \
+    echo "GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}" >> .env && \
+    echo "GOOGLE_CALLBACK_URL=${GOOGLE_CALLBACK_URL}" >> .env && \
+    echo "MAILER_EMAIL=${MAILER_EMAIL}" >> .env && \
+    echo "MAILER_PASSWORD=${MAILER_PASSWORD}" >> .env
 
 RUN echo "Building the app"
 RUN ls -la
+RUN cat .env
 
 # ENV GENERATE_SOURCEMAP false
 #see https://stackoverflow.com/questions/62663167/dockerizing-react-in-production-mode-fatal-error-ineffective-mark-compacts-nea
