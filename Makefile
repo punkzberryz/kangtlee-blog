@@ -6,3 +6,5 @@ prune:
 	docker system prune
 build:
 	docker build . --platform linux/amd64 -t ${IMAGE_NAME}
+pull:
+	docker pull ghcr.io/punkzberryz/kangtlee-blog:latest

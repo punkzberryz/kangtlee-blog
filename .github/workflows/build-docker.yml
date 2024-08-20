@@ -36,7 +36,5 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GH_PAT }}
-          # username: punkzberryz
-          # password: ${{ secrets.GITHUB_TOKEN }}
       - name: push image to ghcr
         run: docker push ghcr.io/punkzberryz/kangtlee-blog:latest
