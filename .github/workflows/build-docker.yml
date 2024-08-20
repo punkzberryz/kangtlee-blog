@@ -22,10 +22,10 @@ jobs:
           envkey_MAILER_EMAIL: ${{ secrets.MAILER_EMAIL }}
           envkey_MAILER_PASSWORD: ${{ secrets.MAILER_PASSWORD }}
           directory: .
-      - name: check files
-        run: ls -la
-      - name: cat env
-        run: cat .env
+      # - name: check files
+      #   run: ls -la
+      # - name: cat env
+      #   run: cat .env
       - uses: actions/checkout@v4
       - name: build image
         run: docker build . -t ghcr.io/punkzberryz/kangtlee-blog:latest
