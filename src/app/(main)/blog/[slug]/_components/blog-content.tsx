@@ -77,7 +77,7 @@ const AuthorCard = ({ author }: { author: GetPostResponse["author"] }) => {
             <Separator className="my-4 border-2 border-primary" />
             <h2>{author.displayName}</h2>
           </div>
-          <p>{author.bio}</p>
+          <p className="whitespace-pre-wrap">{author.bio}</p>
         </div>
       </div>
     </div>

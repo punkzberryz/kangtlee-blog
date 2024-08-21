@@ -14,7 +14,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }));
     }
   } catch (err) {}
-  const routes: MetadataRoute.Sitemap = ([] = ["", "/contact"].map((r) => ({
+  const routes: MetadataRoute.Sitemap = ([] = [
+    "",
+    "/contact",
+    "/tools/buddhist-year-to-current-year",
+  ].map((r) => ({
     url: `${config.baseUrl}${r}`,
     lastModified,
   })));
