@@ -20,9 +20,12 @@ export async function GET(req: NextRequest) {
     state !== storedState ||
     !storeCodeVerifier
   ) {
-    return NextResponse.json(null, {
-      status: 400,
-    });
+    return NextResponse.json(
+      { error: "invalid code" },
+      {
+        status: 400,
+      },
+    );
   }
 
   try {
