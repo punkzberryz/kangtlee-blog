@@ -18,18 +18,28 @@ export const MiddleNavMenu = () => {
   const pathname = usePathname();
   return (
     <NavigationMenu className="list-none space-x-4">
-      {LINKS.map((link, index) => (
-        <NavLink
-          key={index}
-          href={link.href}
-          label={link.label}
-          active={
-            link.href === "/"
-              ? pathname === "/"
-              : pathname.startsWith(link.href)
-          }
-        />
-      ))}
+      {LINKS.map((link, index) =>
+        link.sublinks ? (
+          <NavLinkWithSubLinks
+            key={index}
+            href={link.href}
+            label={link.label}
+            active={pathname.startsWith(link.href)}
+            sublinks={link.sublinks}
+          />
+        ) : (
+          <NavLink
+            key={index}
+            href={link.href}
+            label={link.label}
+            active={
+              link.href === "/"
+                ? pathname === "/"
+                : pathname.startsWith(link.href)
+            }
+          />
+        ),
+      )}
     </NavigationMenu>
   );
 };
@@ -59,7 +69,7 @@ const NavLinkWithSubLinks = ({
           {sublinks.map((link, index) => (
             <NavigationMenuItem key={`${label}-${index}`}>
               <NavigationMenuLink asChild className="flex flex-col gap-2">
-                <Link href={href}>
+                <Link href={link.href}>
                   <div className="text-sm font-medium leading-none">
                     {link.label}
                   </div>

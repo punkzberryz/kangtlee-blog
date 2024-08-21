@@ -1,5 +1,16 @@
 export const LINKS: LinkProps[] = [
   { href: "/", label: "บทความ" },
+  {
+    href: "/tools",
+    label: "เครื่องมือ",
+    sublinks: [
+      {
+        label: "แปลงปี พ.ศ. เป็น ค.ศ.",
+        href: "/tools/buddhist-year-to-current-year",
+        description: "แปลงปี พ.ศ. เป็น ค.ศ. และ ค.ศ. เป็น พ.ศ.",
+      },
+    ],
+  },
   { href: "/contact", label: "ติดต่อเรา" },
 ];
 export const ADMIN_LINKS: LinkProps[] = [
