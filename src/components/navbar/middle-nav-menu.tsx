@@ -45,7 +45,6 @@ export const MiddleNavMenu = () => {
 };
 
 const NavLinkWithSubLinks = ({
-  href,
   label,
   sublinks,
   active,

@@ -3,7 +3,7 @@
 import { ReactNode } from "react";
 import { useToggleSideNav } from "./use-toggle-sidenav";
 import { cn } from "@/lib/utils";
-import { Footer } from "@/components/footer";
+import { AdminFooter } from "@/components/footer";
 import { SideNavbar } from "./side-nav";
 
 export const ClientSideNavWrapper = ({ children }: { children: ReactNode }) => {
@@ -24,7 +24,7 @@ export const ClientSideNavWrapper = ({ children }: { children: ReactNode }) => {
       >
         {children}
       </main>
-      <Footer
+      <AdminFooter
         className={cn(
           "transition-[margin-left] duration-300 ease-in",
           isExpanded ? "md:ml-52" : "md:ml-16",
