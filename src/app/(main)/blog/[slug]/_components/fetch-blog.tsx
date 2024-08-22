@@ -1,9 +1,9 @@
-import { delay } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { getPost, getPostError } from "../../_components/fetch-post";
 import { BlogContent } from "./blog-content";
 import { Skeleton } from "@/components/ui/skeleton";
+import { RelatedArticles } from "./related-articles";
 
 interface FetchBlogProps {
   slug: string;
@@ -29,7 +29,12 @@ const FetchBlogAsync = async ({ slug }: FetchBlogProps) => {
     return notFound();
   }
 
-  return <BlogContent post={post} />;
+  return (
+    <>
+      <BlogContent post={post} />
+      {/* <RelatedArticles post={post} /> */}
+    </>
+  );
 };
 
 const BlogSkeleton = () => {

@@ -13,7 +13,7 @@ export const MainLayout = ({
   return (
     <>
       <Navbar />
-      <main className="mx-auto min-h-[calc(100vh-170px)] max-w-screen-2xl">
+      <main className="mx-auto min-h-[calc(100vh-170px)]">
         <MaxWidthWrapper className={cn("py-10", className)}>
           {children}
         </MaxWidthWrapper>

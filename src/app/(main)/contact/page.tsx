@@ -4,7 +4,7 @@ import { ContactForm } from "./_components/contact-form";
 
 const ContactPage = () => {
   return (
-    <div className="flex flex-col space-y-8">
+    <div className="mx-auto flex max-w-screen-2xl flex-col space-y-8">
       <div className="space-y-4">
         <h1>ติดต่อ KangTLee</h1>
         <p>สนใจบริการเขียนเว็บแอป หรือต้องการพูดคุย ติดต่อเราได้ที่นี่...</p>

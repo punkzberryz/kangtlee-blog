@@ -36,7 +36,6 @@ export const BlogContent = ({ post }: BlogContentProps) => {
         )}
       ></div>
       {/* Author Card */}
-
       <AuthorCard author={post.author} />
     </div>
   );

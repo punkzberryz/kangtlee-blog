@@ -6,7 +6,7 @@ import { config } from "@/lib/config";
 
 const BuddhistYearToCurrentYearCalculator = () => {
   return (
-    <div className="space-y-8">
+    <div className="mx-auto max-w-screen-xl space-y-8">
       <Card className="border border-primary">
         <CardContent className="space-y-4 pt-6">
           <h1 className="text-2xl font-semibold text-primary md:text-4xl">
