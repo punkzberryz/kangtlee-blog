@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Fragment, Suspense } from "react";
 import { validateRequest } from "@/lib/auth";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
@@ -56,10 +56,7 @@ const AdminProtection = () => {
 const FetchAdmin = async () => {
   const { user } = await validateRequest();
   if (!user) {
-    {
-      /* TODO: create admin unauth page */
-    }
-    redirect("/admin/unauthorized");
+    notFound();
   }
   return null;
 };
