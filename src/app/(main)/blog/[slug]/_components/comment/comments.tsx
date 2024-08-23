@@ -19,11 +19,15 @@ export const Comments = ({ postId }: CommentsProps) => {
 
   if (isLoading) return null;
   if (!data || !data.length) return <AddComment {...addCommentProps} />;
+  let commentNumber = data.length;
+  data.forEach((comment) => {
+    commentNumber += comment.children.length;
+  });
   return (
     <>
       <div className="mt-10 flex flex-col items-start gap-4 space-y-4">
         <h4 className="text-xl font-semibold text-primary">
-          คอมเมนท์ ({data.length})
+          คอมเมนท์ ({commentNumber})
         </h4>
         <ul className="space-y-8">
           {data.map((comment) => (
