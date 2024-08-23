@@ -16,5 +16,6 @@ const ContactPage = () => {
 export default ContactPage;
 export const metadata: Metadata = {
   title: "ติดต่อเรา",
-  description: "ติดต่อเรา",
+  description:
+    "สวัสดีครับ ผม KangTLee สนใจบริการเขียนเว็บแอป หรือต้องการพูดคุย ติดต่อเราได้ที่นี่ครับ... ",
 };

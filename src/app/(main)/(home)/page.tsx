@@ -31,5 +31,6 @@ const AsyncBlogPages = async () => {
 export default BlogsPage;
 export const metadata: Metadata = {
   title: "บทความ",
-  description: "บทความทั้งหมด",
+  description:
+    "สวัสดีครับ ผม KangTLee ผมชอบเขียนบทความเกี่ยวกับ Web development และ Lifestyle ครับ",
 };
