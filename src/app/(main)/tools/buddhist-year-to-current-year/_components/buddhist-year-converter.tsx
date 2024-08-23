@@ -66,6 +66,7 @@ export const BuddhistYearToCurrentYearConverter = () => {
               <FormControl>
                 <Input
                   {...field}
+                  autoFocus
                   onChange={(e) => {
                     form.clearErrors(["cYear", "bYear"]);
                     const value = e.target.value;
