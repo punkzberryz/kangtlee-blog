@@ -17,7 +17,7 @@ const formatDateToThaiDate = (
     excludeYear?: boolean;
     excludeDay?: boolean;
     onlyYear?: boolean;
-    format?: "dd-LL-yyyy";
+    format?: "dd-LL-yyyy" | "dd-LLLL-yyyy - HH:mm น.";
   } = {},
 ) => {
   const convertedDate = convertYearToBuddhist(date);

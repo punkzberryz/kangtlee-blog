@@ -3,7 +3,8 @@ import { Suspense } from "react";
 import { getPost, getPostError } from "../../_components/fetch-post";
 import { BlogContent } from "./blog-content";
 import { Skeleton } from "@/components/ui/skeleton";
-import { RelatedArticles } from "./related-articles";
+import { RelatedArticles } from "./related-articles/related-articles";
+import { Comments } from "./comment/comments";
 
 interface FetchBlogProps {
   slug: string;
@@ -31,9 +32,10 @@ const FetchBlogAsync = async ({ slug }: FetchBlogProps) => {
 
   return (
     <>
-    {/* TODO: make it responsive */}
+      {/* TODO: make it responsive */}
       <BlogContent post={post} />
       <RelatedArticles post={post} />
+      <Comments postId={post.id} />
     </>
   );
 };

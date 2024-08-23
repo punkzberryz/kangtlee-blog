@@ -3,7 +3,7 @@
 import { db } from "@/lib/db";
 import { BadRequestError } from "@/lib/error";
 import { catchErrorForServerActionHelper } from "@/lib/error/catch-error-action-helper";
-import { Post, TagsOnPosts } from "@prisma/client";
+import { Post } from "@prisma/client";
 
 export const fetchRelatedArticles = async ({ post }: { post: Post }) => {
   try {
@@ -45,6 +45,9 @@ export const fetchRelatedArticles = async ({ post }: { post: Post }) => {
     return { posts: relatedPosts };
   } catch (err) {
     const error = catchErrorForServerActionHelper(err);
+    if (error.code !== 400) {
+      console.log({ error, func: "fetchRelatedArticles" });
+    }
     return { error };
   }
 };

@@ -1,4 +1,3 @@
-import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { Metadata } from "next";
 import { ContactForm } from "./_components/contact-form";
 

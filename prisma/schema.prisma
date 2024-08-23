@@ -83,14 +83,17 @@ model TagsOnPosts {
 }
 
 model Comment {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   postId    Int
-  Post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  comment   String   @db.VarChar(255)
+  Post      Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  comment   String    @db.VarChar(255)
   name      String
   email     String
   website   String?
-  createdAt DateTime @default(now())
+  parent    Comment?  @relation("ParentToChildComments", fields: [parentId], references: [id], onDelete: Cascade)
+  parentId  String?
+  children  Comment[] @relation("ParentToChildComments")
+  createdAt DateTime  @default(now())
 
   @@index([postId])
 }
