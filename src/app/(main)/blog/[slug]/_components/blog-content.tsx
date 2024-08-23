@@ -32,7 +32,7 @@ export const BlogContent = ({ post }: BlogContentProps) => {
         className={cn(
           "ProseMirror",
           "prose-headings:font-title font-default prose prose-lg dark:prose-invert focus:outline-none",
-          "mx-auto max-w-screen-lg",
+          "-mx-2.5 w-screen md:mx-auto md:w-full md:max-w-screen-lg",
         )}
       ></div>
       {/* Author Card */}
