@@ -10,7 +10,8 @@ interface BlogPageBySlugProps {
 }
 
 const BlogPageBySlug = ({ params: { slug } }: BlogPageBySlugProps) => {
-  return <FetchBlog slug={slug} />;
+  return <FetchBlog slug={slug} />
+  
 };
 
 export default BlogPageBySlug;

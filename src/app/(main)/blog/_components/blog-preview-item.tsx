@@ -1,16 +1,27 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import { Post } from "@prisma/client";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { ReactNode } from "react";
 
 interface BlogPreviewItemProps {
   post: Post;
 }
+
+const BlogPreviewWrapper = ({ children }: { children: ReactNode }) => {
+  return (
+    <li className="group flex w-[350px] flex-col items-center gap-4 overflow-clip rounded-xl border bg-background shadow-xl dark:border-primary dark:shadow-primary/30">
+      {children}
+    </li>
+  );
+};
+
 export const BlogPreviewItem = ({ post }: BlogPreviewItemProps) => {
   const href = `/blog/${post.slug}`;
 
   return (
-    <li className="group flex w-[350px] flex-col items-center gap-4 overflow-clip rounded-xl border shadow-xl dark:border-primary dark:shadow-primary/30">
+    <BlogPreviewWrapper>
       <Link href={href}>
         <Image
           className="aspect-[4/3] w-[350px] rounded-none object-cover"
@@ -41,6 +52,24 @@ export const BlogPreviewItem = ({ post }: BlogPreviewItemProps) => {
           </div>
         </Link>
       </div>
-    </li>
+    </BlogPreviewWrapper>
+  );
+};
+
+BlogPreviewItem.skeleton = function BlogPreviewSkeleton() {
+  return (
+    <BlogPreviewWrapper>
+      {/* Image */}
+      <Skeleton className="aspect-[4/3] w-[350px] rounded-none" />
+      {/* Body */}
+      <div className="w-full space-y-4 px-4 py-10">
+        {/* Title */}
+        <Skeleton className="h-5"></Skeleton>
+        {/* Description */}
+        <div className="relative h-24 overflow-hidden">
+          <Skeleton className="h-full"></Skeleton>
+        </div>
+      </div>
+    </BlogPreviewWrapper>
   );
 };

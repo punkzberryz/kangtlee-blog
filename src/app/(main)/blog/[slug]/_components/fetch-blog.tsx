@@ -31,8 +31,9 @@ const FetchBlogAsync = async ({ slug }: FetchBlogProps) => {
 
   return (
     <>
+    {/* TODO: make it responsive */}
       <BlogContent post={post} />
-      {/* <RelatedArticles post={post} /> */}
+      <RelatedArticles post={post} />
     </>
   );
 };
