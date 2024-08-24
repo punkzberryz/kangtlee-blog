@@ -5,7 +5,7 @@ import { addCommentSchema, AddCommentSchema } from "./add-comment-schema";
 import { BadRequestError } from "@/lib/error";
 import { db } from "@/lib/db";
 
-export const addCommentAction = ({
+export const addCommentAction = async ({
   data,
   postId,
   parentId,
@@ -22,7 +22,7 @@ export const addCommentAction = ({
     if (data.phone !== "") return {};
     if (!parentId) {
       //create comment
-      const comment = db.comment.create({
+      const comment = await db.comment.create({
         data: {
           comment: data.comment,
           email: data.email,
@@ -34,7 +34,7 @@ export const addCommentAction = ({
       return { comment };
     }
     //has parent, let's check if it exists
-    const parentComment = db.comment.findUnique({
+    const parentComment = await db.comment.findUnique({
       where: {
         id: parentId,
       },

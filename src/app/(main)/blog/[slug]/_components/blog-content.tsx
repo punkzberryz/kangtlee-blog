@@ -9,6 +9,7 @@ import "./blog.css";
 interface BlogContentProps {
   post: GetPostResponse;
 }
+
 export const BlogContent = ({ post }: BlogContentProps) => {
   return (
     <div className="mx-auto flex max-w-screen-lg flex-col items-center gap-8">
@@ -23,6 +24,7 @@ export const BlogContent = ({ post }: BlogContentProps) => {
         </div>
       </header>
       {/* Hero-image */}
+      {/* <HeroImage alt={post.title} imgUrl={post.imgUrl} /> */}
       <div className="mx-12 w-fit overflow-hidden rounded-lg">
         <Image alt={post.title} src={post.imgUrl} height={630} width={1200} />
       </div>
@@ -32,7 +34,7 @@ export const BlogContent = ({ post }: BlogContentProps) => {
         className={cn(
           "ProseMirror",
           "prose-headings:font-title font-default prose prose-lg dark:prose-invert focus:outline-none",
-          "mx-auto max-w-screen-lg",
+          "-mx-2.5 w-screen md:mx-auto md:w-full md:max-w-screen-lg",
         )}
       ></div>
       {/* Author Card */}
@@ -79,6 +81,25 @@ const AuthorCard = ({ author }: { author: GetPostResponse["author"] }) => {
           <p className="whitespace-pre-wrap">{author.bio}</p>
         </div>
       </div>
+    </div>
+  );
+};
+function getThumbnailUrl(url: string) {
+  return url.replace(/\.webp/, ".th.webp");
+}
+const HeroImage = ({ imgUrl, alt }: { imgUrl: string; alt: string }) => {
+  const thumbnail = getThumbnailUrl(imgUrl);
+  return (
+    <div className="mx-12 w-fit overflow-hidden rounded-lg">
+      <Image
+        alt={alt}
+        src={imgUrl}
+        placeholder="blur"
+        blurDataURL={thumbnail}
+        height={630}
+        width={1200}
+        priority
+      />
     </div>
   );
 };
