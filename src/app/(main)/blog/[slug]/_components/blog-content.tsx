@@ -89,6 +89,7 @@ function getThumbnailUrl(url: string) {
 }
 const HeroImage = ({ imgUrl, alt }: { imgUrl: string; alt: string }) => {
   const thumbnail = getThumbnailUrl(imgUrl);
+
   return (
     <div className="mx-12 w-fit overflow-hidden rounded-lg">
       <Image
@@ -98,7 +99,7 @@ const HeroImage = ({ imgUrl, alt }: { imgUrl: string; alt: string }) => {
         blurDataURL={thumbnail}
         height={630}
         width={1200}
-        priority
+        // priority
       />
     </div>
   );

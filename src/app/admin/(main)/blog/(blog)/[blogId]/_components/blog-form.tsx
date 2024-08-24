@@ -19,7 +19,7 @@ import { useBlogForm } from "./use-blog-form";
 import { useEditorStore } from "@/components/editor";
 import { LoadingBars } from "@/components/ui/loading-bars";
 import { toast } from "react-toastify";
-import { SlugField } from "./slug-field";
+
 
 interface BlogFormProps {
   isNew?: boolean;
@@ -111,6 +111,7 @@ export const BlogForm = ({
               />
             </CustomCheckboxWrapper>
             <EditorField
+              key={initialData?.id ?? 0}
               form={form}
               initialContent={initialData?.content}
               isNew={isNew}

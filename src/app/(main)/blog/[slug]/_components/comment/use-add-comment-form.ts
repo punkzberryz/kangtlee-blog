@@ -22,7 +22,7 @@ export const useAddCommentForm = (postId: number, refetch: () => void) => {
     parentId: string | null,
   ) => {
     setLoading(true);
-    const { error } = addCommentAction({ data, postId, parentId });
+    const { error } = await addCommentAction({ data, postId, parentId });
     if (error) {
       toast.error("เกิดข้อผิดพลาดในการส่งข้อความ");
       return;

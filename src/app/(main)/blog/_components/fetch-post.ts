@@ -22,35 +22,38 @@ export const getPosts = cache(
   },
 );
 
-export const getPost = async (
-  slug: string,
-  options: {
-    includeNotPublished?: boolean;
-  } = {},
-) => {
-  try {
-    const post = await db.post.findUnique({
-      where: {
-        slug,
-        isPublished: options.includeNotPublished ? undefined : true,
-      },
-      include: {
-        author: true,
-        category: true,
-        TagsOnPosts: {
-          select: { tag: true },
+export const getPost = cache(
+  async (
+    slug: string,
+    options: {
+      includeNotPublished?: boolean;
+    } = {},
+  ) => {
+    try {
+      const post = await db.post.findUnique({
+        where: {
+          slug,
+          isPublished: options.includeNotPublished ? undefined : true,
         },
-      },
-    });
+        include: {
+          author: true,
+          category: true,
+          TagsOnPosts: {
+            select: { tag: true },
+          },
+        },
+      });
 
-    if (!post) throw new InternalServerError(getPostError.postNotFound);
+      if (!post) throw new InternalServerError(getPostError.postNotFound);
 
-    return { post };
-  } catch (err) {
-    const error = catchErrorForServerActionHelper(err);
-    return { error };
-  }
-};
+      return { post };
+    } catch (err) {
+      const error = catchErrorForServerActionHelper(err);
+      console.log({ error, message: "get post error" });
+      return { error };
+    }
+  },
+);
 
 export const enum getPostError {
   postNotFound = "post not found",

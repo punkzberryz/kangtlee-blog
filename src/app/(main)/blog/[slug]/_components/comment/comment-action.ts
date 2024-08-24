@@ -41,7 +41,7 @@ export const addCommentAction = async ({
     });
     if (!parentComment) throw new BadRequestError("parent comment not found");
     //create child comment
-    const comment = db.comment.create({
+    const comment = await db.comment.create({
       data: {
         comment: data.comment,
         email: data.email,

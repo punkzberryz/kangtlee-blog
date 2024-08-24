@@ -9,7 +9,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Editor, EditorStatus, highlightCodeblocks } from "@/components/editor";
+import {
+  Editor,
+  EditorStatus,
+  highlightCodeblocks,
+  useEditorStore,
+} from "@/components/editor";
 import { EditorInstance } from "novel";
 
 interface EditorFieldProps {
@@ -22,11 +27,14 @@ export const EditorField = ({
   isNew,
   initialContent,
 }: EditorFieldProps) => {
+  const { setCharsCount } = useEditorStore();
   const handleOnEditorCreate = ({ editor }: { editor: EditorInstance }) => {
     //update form value when editor is created
     const htmlContent = highlightCodeblocks(editor.getHTML());
+    setCharsCount(editor.storage.characterCount.words());
     form.setValue("htmlContent", htmlContent);
   };
+
   return (
     <FormField
       control={form.control}

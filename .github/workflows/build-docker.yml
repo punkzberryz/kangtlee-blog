@@ -18,6 +18,7 @@ jobs:
         uses: SpicyPizza/create-envfile@v2.0
         with:
           envkey_DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          envkey_DIRECT_URL: ${{ secrets.DIRECT_URL }}
           envkey_NEXT_PUBLIC_URL: ${{ secrets.NEXT_PUBLIC_URL }}
           envkey_SIGNUP_ADMIN_SECRET: ${{ secrets.SIGNUP_ADMIN_SECRET }}
           envkey_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
