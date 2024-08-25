@@ -68,7 +68,7 @@ const CommentDisplay = ({
         <Link
           href={comment.website}
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener noreferrer nofollow"
           className="underline-offset-4 hover:underline"
         >
           <p className="text-xl font-semibold">{comment.name}</p>

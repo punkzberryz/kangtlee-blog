@@ -24,6 +24,7 @@ const FetchBlogAsync = async ({ slug }: FetchBlogProps) => {
     if (error.message === getPostError.postNotFound) {
       return notFound();
     }
+    console.error({ error, message: "get post error, FetchBlogAsync" });
     throw new Error();
   }
   if (!post.content) {
