@@ -8,7 +8,7 @@ const BlogsPage = () => {
   return (
     <div className="mx-auto max-w-screen-2xl space-y-10">
       <h1>บทความ</h1>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<BlogPagesSkeleton />}>
         <AsyncBlogPages />
       </Suspense>
     </div>
@@ -25,6 +25,16 @@ const AsyncBlogPages = async () => {
       {posts.map((post) => (
         <BlogPreviewItem key={post.id} post={post} />
       ))}
+    </ul>
+  );
+};
+const BlogPagesSkeleton = () => {
+  return (
+    <ul className="flex flex-wrap gap-8">
+      <BlogPreviewItem.skeleton />
+      <BlogPreviewItem.skeleton />
+      <BlogPreviewItem.skeleton />
+      <BlogPreviewItem.skeleton />
     </ul>
   );
 };
