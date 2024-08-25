@@ -19,7 +19,7 @@ export const FetchBlog = ({ slug }: FetchBlogProps) => {
 
 const FetchBlogAsync = async ({ slug }: FetchBlogProps) => {
   // await delay(2000);
-  const { post, error } = await getPost(slug);
+  const { post, error } = await getPost(slug, { includeNotPublished: true });
   if (error) {
     if (error.message === getPostError.postNotFound) {
       return notFound();
