@@ -10,8 +10,7 @@ interface BlogPageBySlugProps {
 }
 
 const BlogPageBySlug = ({ params: { slug } }: BlogPageBySlugProps) => {
-  return <FetchBlog slug={slug} />
-  
+  return <FetchBlog slug={slug} />;
 };
 
 export default BlogPageBySlug;
@@ -28,7 +27,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params: { slug },
 }: BlogPageBySlugProps): Promise<Metadata> {
-  const { post, error } = await getPost(slug);
+  const { post, error } = await getPost(slug, { includeNotPublished: true });
   if (error) {
     return metadataNotFound;
   }
