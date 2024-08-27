@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { getTranscript } from "./youtube-transcript-action";
+import { getTranscript, getTranscriptV2 } from "./youtube-transcript-action";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { YtTranscript, ytTranscriptSchema } from "./youtube-transcript-schema";
@@ -92,16 +92,17 @@ const useYoutubeTranscriptForm = () => {
   });
   const handleSubmit = async (data: YtTranscript) => {
     setLoading(true);
-    const { error, transcript } = await getTranscript(data.url);
+    const { error, transcript } = await getTranscriptV2(data.url);
     if (error || !transcript) {
       setLoading(false);
       console.log({ error, transcript });
       setTranscript([]);
-      toast.error(error.message || "Something went wrong");
+      toast.error(error?.message || "Something went wrong");
       return;
     }
-    const transformed = transformTranscript(transcript);
-    setTranscript(transformed);
+    // const transformed = transformTranscript(transcript);
+    // setTranscript(transformed);
+    console.log({ transcript });
     toast.success("success");
     setLoading(false);
   };

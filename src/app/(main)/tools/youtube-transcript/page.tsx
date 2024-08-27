@@ -7,8 +7,11 @@ import {
 import { YoutubeTranscriptForm } from "./youtube-transcript-form";
 import { Metadata } from "next";
 import { config } from "@/lib/config";
+import { redirect } from "next/navigation";
 
 const YoutubeTranscriptPage = () => {
+  redirect("/tools");
+  // Youtube block ip...
   return (
     <div className="mx-auto max-w-screen-xl">
       <Card>
