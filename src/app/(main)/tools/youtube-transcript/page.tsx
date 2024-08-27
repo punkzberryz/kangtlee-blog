@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/card";
 import { YoutubeTranscriptForm } from "./youtube-transcript-form";
 import { Metadata } from "next";
+import { config } from "@/lib/config";
 
 const YoutubeTranscriptPage = () => {
   return (
@@ -27,10 +28,46 @@ const YoutubeTranscriptPage = () => {
 };
 
 export default YoutubeTranscriptPage;
+
+const title = "FREE Youtube Transcript Extractor";
+const description =
+  "Extract transcript from youtube video for FREE by providing the video URL, no login required";
+const imgUrl = "https://img5.pic.in.th/file/secure-sv1/transcript-extract.webp";
+
 export const metadata: Metadata = {
   title: {
-    absolute: "FREE Youtube Transcript Extractor",
+    absolute: title,
   },
-  description:
-    "Extract transcript from youtube video for FREE by providing the video URL, no login required",
+  description,
+  keywords: ["youtube transcript extract", "youtube transcript"],
+  openGraph: {
+    title: { absolute: title },
+    description,
+    url: config.baseUrl + "/tools/youtube-transcript",
+    siteName: "KangTLee",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: imgUrl,
+        width: 1200,
+        height: 630,
+        alt: title,
+      },
+    ],
+  },
+  twitter: {
+    title: { absolute: title },
+    description,
+    images: [
+      {
+        url: imgUrl,
+        width: 1200,
+        height: 630,
+        alt: title,
+      },
+    ],
+    card: "summary_large_image",
+    creator: "@KangTLee1",
+  },
 };
