@@ -15,6 +15,12 @@ export const LINKS: LinkProps[] = [
       //   description:
       //     "Extract transcript from youtube video by providing video URL",
       // },
+      {
+        label: "ลบพื้นหลังรูปถ่าย",
+        href: "/tools/image-background-remove",
+        description:
+          "ลบพื้นหลังรูปถ่าย ฟรี ไม่ต้องสมัครสมาชิก ไม่มีค่าใช้จ่าย ใช้งานสะดวก ไม่จำกัดจำนวนการใช้งาน",
+      },
     ],
   },
   { href: "/contact", label: "ติดต่อเรา" },
