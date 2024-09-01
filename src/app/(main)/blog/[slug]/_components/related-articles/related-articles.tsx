@@ -12,7 +12,7 @@ interface RelatedArticlesProps {
 export const RelatedArticles = ({ post }: RelatedArticlesProps) => {
   const { data, isLoading } = useRelatedArticles({ post });
   return (
-    <CancelMaxWidthWrapper className="mt-10 flex flex-col items-center gap-8 bg-gray-100 px-2 py-10 dark:bg-gray-900 md:px-20">
+    <CancelMaxWidthWrapper className="mt-10 flex flex-col items-center gap-8 overflow-x-clip bg-gray-100 px-2 py-10 dark:bg-gray-900 md:px-20">
       <h4 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
         บทความที่เกี่ยวข้อง
       </h4>

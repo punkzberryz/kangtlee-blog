@@ -8,8 +8,8 @@ import Link from "next/link";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/icons";
-import { Separator } from "@radix-ui/react-dropdown-menu";
 import { SideNavLinksForSheet } from "./side-nav-links";
+import { Separator } from "@/components/ui/separator";
 
 //For below md screen
 export const SideNavbarMobileView = () => {

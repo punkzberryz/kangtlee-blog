@@ -5,11 +5,8 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Fragment, Suspense } from "react";
-import { validateRequest } from "@/lib/auth";
-import { notFound, redirect } from "next/navigation";
+import { Fragment } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { ThemeToggleButton } from "@/components/providers/theme-toggle-button";
 import { AuthNav } from "./auth-nav";
@@ -40,25 +37,8 @@ export const PageWrapper = ({
           </CardContent>
         </Card>
       </div>
-      <AdminProtection />
     </>
   );
-};
-
-const AdminProtection = () => {
-  return (
-    <Suspense fallback={<Skeleton className="h-8 w-8 rounded-full border" />}>
-      <FetchAdmin />
-    </Suspense>
-  );
-};
-
-const FetchAdmin = async () => {
-  const { user } = await validateRequest();
-  if (!user) {
-    notFound();
-  }
-  return null;
 };
 
 const PageHeader = ({
