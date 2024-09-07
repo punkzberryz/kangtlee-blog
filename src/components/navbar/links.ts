@@ -9,12 +9,6 @@ export const LINKS: LinkProps[] = [
         href: "/tools/buddhist-year-to-current-year",
         description: "แปลงปี พ.ศ. เป็น ค.ศ. และ ค.ศ. เป็น พ.ศ.",
       },
-      // {
-      //   label: "Youtube Transcript Extractor",
-      //   href: "/tools/youtube-transcript",
-      //   description:
-      //     "Extract transcript from youtube video by providing video URL",
-      // },
       {
         label: "ลบพื้นหลังรูปถ่าย",
         href: "/tools/image-background-remove",
