@@ -2,6 +2,7 @@
 import {
   ColumnDef,
   ColumnFiltersState,
+  RowData,
   SortingState,
   flexRender,
   getCoreRowModel,
@@ -11,17 +12,32 @@ import {
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import * as t from "@/components/ui/table";
-interface Props<TData, TValue> {
+import { PlusCircle } from "lucide-react";
+
+declare module "@tanstack/react-table" {
+  interface TableMeta<TData extends RowData> {
+    onUpdateData: (rowIndex: number, columnId: string, value: any) => void;
+    onDeleteRow: (rowIndex: number) => void;
+  }
+}
+
+interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  onAddNewClick?: () => void;
+  onUpdateData: (rowIndex: number, columnId: string, value: TValue) => void;
+  onDeleteRow: (rowIndex: number) => void;
   showSearchBar?: boolean;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  onAddNewClick,
+  onDeleteRow,
+  onUpdateData,
   showSearchBar = false,
-}: Props<TData, TValue>) {
+}: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
@@ -33,6 +49,10 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    meta: {
+      onUpdateData,
+      onDeleteRow,
+    },
   });
 
   useEffect(() => {
@@ -40,7 +60,7 @@ export function DataTable<TData, TValue>({
   }, []);
 
   return (
-    <div className="space-y-4">
+    <div className="group space-y-4">
       {/* <TableToolbar table={table} showSearchBar={showSearchBar} /> */}
       <div className="rounded-md border">
         <t.Table>
@@ -75,10 +95,12 @@ export function DataTable<TData, TValue>({
                 <t.TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  className="group/row relative"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <t.TableCell
                       key={cell.id}
+                      className="align-top"
                       // className="border"
                       // style={{
                       //   minWidth: cell.column.columnDef.size,
@@ -106,6 +128,20 @@ export function DataTable<TData, TValue>({
           </t.TableBody>
         </t.Table>
       </div>
+      {onAddNewClick ? (
+        <AddNewDataButton onAddNewClick={onAddNewClick} />
+      ) : null}
     </div>
   );
 }
+
+const AddNewDataButton = ({ onAddNewClick }: { onAddNewClick: () => void }) => {
+  return (
+    <div
+      className="flex items-center justify-center rounded-md border-gray-200 py-4 hover:bg-muted/50"
+      onClick={onAddNewClick}
+    >
+      <PlusCircle className="h-5 w-5 -translate-y-3 text-gray-500 opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100" />
+    </div>
+  );
+};
