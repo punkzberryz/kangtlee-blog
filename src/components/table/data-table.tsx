@@ -25,8 +25,8 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   onAddNewClick?: () => void;
-  onUpdateData: (rowIndex: number, columnId: string, value: TValue) => void;
-  onDeleteRow: (rowIndex: number) => void;
+  onUpdateData?: (rowIndex: number, columnId: string, value: TValue) => void;
+  onDeleteRow?: (rowIndex: number) => void;
   showSearchBar?: boolean;
 }
 
@@ -50,8 +50,8 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     meta: {
-      onUpdateData,
-      onDeleteRow,
+      onUpdateData: onUpdateData || (() => {}),
+      onDeleteRow: onDeleteRow || (() => {}),
     },
   });
 
