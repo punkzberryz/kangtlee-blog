@@ -16,7 +16,7 @@ import { PaymentMethod } from "./table/payment-method";
 import { OrderSummaryField } from "./order-summary-field";
 import { AuthorizedByField } from "./authorized-by-field";
 import { Button } from "@/components/ui/button";
-import { pdf, PDFViewer, usePDF } from "@react-pdf/renderer";
+import { pdf } from "@react-pdf/renderer";
 import { InvoicePdfBuilder } from "../pdf/invoice-pdf-builder";
 
 export const InvoiceForm = () => {
@@ -67,7 +67,7 @@ export const InvoiceForm = () => {
 const useInvoiceForm = () => {
   const today = new Date();
   const [invoice, setInvoice] = useState<InvoiceFormSchema | null>(null);
-  const [instance, updateInstance] = usePDF();
+
   const form = useForm<InvoiceFormSchema>({
     resolver: zodResolver(invoiceFormSchema),
     defaultValues: {
@@ -135,5 +135,5 @@ const useInvoiceForm = () => {
       //   useInvoiceStore.setState({ invoice: form.getValues() });
     }
   }, [form]);
-  return { form, onSubmit, invoice, instance };
+  return { form, onSubmit, invoice };
 };

@@ -1,6 +1,6 @@
-dev-up:
+up:
 	docker-compose -f docker-compose.dev.yml up -d
-dev-down:
+down:
 	docker-compose -f docker-compose.dev.yml down
 prune:
 	docker system prune

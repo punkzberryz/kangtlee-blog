@@ -33,6 +33,7 @@ const nextConfig = {
       },
     ],
   },
+  // …
 };
 
 // Merge MDX config with Next.js config
