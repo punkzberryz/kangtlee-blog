@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   PopoverContent,
   Popover,
@@ -7,7 +8,8 @@ import {
 import { cn } from "@/lib/utils";
 import { Check, Trash } from "lucide-react";
 import { useEditor } from "novel";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 export function isValidUrl(url: string) {
   try {
@@ -34,6 +36,7 @@ interface LinkSelectorProps {
 
 export const LinkSelector = ({ open, onOpenChange }: LinkSelectorProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [dofollow, setDofollow] = useState(false);
   const { editor } = useEditor();
 
   // Autofocus on input by default
@@ -41,7 +44,23 @@ export const LinkSelector = ({ open, onOpenChange }: LinkSelectorProps) => {
     inputRef.current?.focus();
   });
   if (!editor) return null;
-
+  const handleCreatLink = () => {
+    const input = inputRef.current?.value;
+    console.log({ input });
+    if (!input) return;
+    const url = getUrlFromString(input);
+    if (!url) {
+      toast.error("Invalid URL");
+      return;
+    }
+    if (dofollow) {
+      editor.chain().focus().setLink({ href: url, rel: "noopener" }).run();
+    } else {
+      editor.chain().focus().setLink({ href: url }).run();
+    }
+    onOpenChange(false);
+    setDofollow(false);
+  };
   return (
     <Popover modal={true} open={open} onOpenChange={onOpenChange}>
       <PopoverTrigger asChild>
@@ -62,26 +81,29 @@ export const LinkSelector = ({ open, onOpenChange }: LinkSelectorProps) => {
         </Button>
       </PopoverTrigger>
       <PopoverContent align="start" className="w-60 p-0" sideOffset={10}>
-        <form
-          onSubmit={(e) => {
-            const target = e.currentTarget as HTMLFormElement;
-            e.preventDefault();
-            const input = target[0] as HTMLInputElement;
-            const url = getUrlFromString(input.value);
-            if (url) {
-              editor.chain().focus().setLink({ href: url }).run();
-              onOpenChange(false);
-            }
-          }}
-          className="flex p-1"
-        >
-          <input
-            ref={inputRef}
-            type="text"
-            placeholder="Paste a link"
-            className="flex-1 bg-background p-1 text-sm outline-none"
-            defaultValue={editor.getAttributes("link").href || ""}
-          />
+        <div className="flex p-1">
+          <div className="flex flex-col">
+            <input
+              ref={inputRef}
+              type="text"
+              placeholder="Paste a link"
+              className="flex-1 bg-background p-1 text-sm outline-none"
+              defaultValue={editor.getAttributes("link").href || ""}
+            />
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="dofollow"
+                onCheckedChange={(c) => setDofollow(c === true)}
+                checked={dofollow}
+              />
+              <label
+                htmlFor="dofollow"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Dofollow ?
+              </label>
+            </div>
+          </div>
           {editor.getAttributes("link").href ? (
             <Button
               size="icon"
@@ -98,11 +120,16 @@ export const LinkSelector = ({ open, onOpenChange }: LinkSelectorProps) => {
               <Trash className="h-4 w-4" />
             </Button>
           ) : (
-            <Button size="icon" className="h-8" type="button">
+            <Button
+              size="icon"
+              className="h-8"
+              type="button"
+              onClick={handleCreatLink}
+            >
               <Check className="h-4 w-4" />
             </Button>
           )}
-        </form>
+        </div>
       </PopoverContent>
     </Popover>
   );
