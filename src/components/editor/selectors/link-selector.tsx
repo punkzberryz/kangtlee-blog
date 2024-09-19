@@ -39,15 +39,10 @@ export const LinkSelector = ({ open, onOpenChange }: LinkSelectorProps) => {
   const [dofollow, setDofollow] = useState(false);
   const { editor } = useEditor();
 
-  // Autofocus on input by default
-  useEffect(() => {
-    inputRef.current?.focus();
-  });
-  if (!editor) return null;
   const handleCreatLink = () => {
     const input = inputRef.current?.value;
-    console.log({ input });
-    if (!input) return;
+
+    if (!input || !editor) return;
     const url = getUrlFromString(input);
     if (!url) {
       toast.error("Invalid URL");
@@ -61,6 +56,12 @@ export const LinkSelector = ({ open, onOpenChange }: LinkSelectorProps) => {
     onOpenChange(false);
     setDofollow(false);
   };
+
+  // Autofocus on input by default
+  useEffect(() => {
+    inputRef.current?.focus();
+  });
+  if (!editor) return null;
   return (
     <Popover modal={true} open={open} onOpenChange={onOpenChange}>
       <PopoverTrigger asChild>
