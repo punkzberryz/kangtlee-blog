@@ -21,7 +21,25 @@ export const getPosts = cache(
     }
   },
 );
-
+export const getPostsByTagName = async (tagName: string) => {
+  try {
+    const tagAndPost = await db.postTag.findUnique({
+      where: { name: tagName },
+      include: {
+        TagsOnPosts: {
+          include: { post: true },
+          orderBy: { postId: "desc" },
+        },
+      },
+    });
+    if (!tagAndPost) throw new InternalServerError("tag not found");
+    const posts = tagAndPost?.TagsOnPosts.map((tagOnPost) => tagOnPost.post);
+    return { posts };
+  } catch (err) {
+    const error = catchErrorForServerActionHelper(err);
+    return { error };
+  }
+};
 export const getPost = cache(
   async (
     slug: string,

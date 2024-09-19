@@ -64,14 +64,18 @@ model Post {
 
 model PostCategory {
   id    Int    @id @default(autoincrement())
-  name  String
+  name  String @unique
   posts Post[] @relation("CategoryToPost")
+
+  @@index([name])
 }
 
 model PostTag {
   id          Int           @id @default(autoincrement())
-  name        String
+  name        String        @unique
   TagsOnPosts TagsOnPosts[]
+
+  @@index([name])
 }
 
 model TagsOnPosts {
