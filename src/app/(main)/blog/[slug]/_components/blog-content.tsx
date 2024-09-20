@@ -6,6 +6,7 @@ import { DotIcon } from "lucide-react";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import "./blog.css";
+import { TagsSection } from "./tags-section";
 interface BlogContentProps {
   post: GetPostResponse;
 }
@@ -39,6 +40,8 @@ export const BlogContent = ({ post }: BlogContentProps) => {
       ></div>
       {/* Author Card */}
       <AuthorCard author={post.author} />
+      {/* Tags */}
+      <TagsSection tags={post.TagsOnPosts.map((t) => t.tag)} />
     </div>
   );
 };
