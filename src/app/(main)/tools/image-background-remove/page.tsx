@@ -10,7 +10,7 @@ import {
 
 const ImageBackgroundRemovePage = () => {
   return (
-    <div className="mx-auto max-w-screen-xl">
+    <div className="mx-auto max-w-screen-xl space-y-8">
       <Card>
         <CardHeader>
           <h1>{title}</h1>
@@ -20,10 +20,28 @@ const ImageBackgroundRemovePage = () => {
           <Client />
         </CardContent>
       </Card>
+      <Card>
+        <CardHeader>
+          <h2>วิธีใช้</h2>
+          <CardDescription>วิธีลบพื้นหลังรูป</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ul className="list-inside list-decimal space-y-2">
+            {STEPS.map((s, idx) => (
+              <li key={idx}>{s}</li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
     </div>
   );
 };
 
+const STEPS = [
+  "เพียงลากรูป หรือกดในช่องวางรูปและเลือกรูปที่ต้องการ",
+  "กดปุ่ม ลบพื้นหลัง (ติ๊กปุ่ม ใช้ GPU หากมี เพื่อเพิ่มความเร็วในการลบรูป)",
+  "จะมีกด Download ปรากฎขึ้น เราเพียงกดปุ่ม รูปก็จะถูกเซฟลงคอมหรือมือถือของคุณ",
+];
 export default ImageBackgroundRemovePage;
 
 const title = "ลบพื้นหลังรูปถ่าย ฟรี";
