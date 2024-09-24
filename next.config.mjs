@@ -33,6 +33,16 @@ const nextConfig = {
       },
     ],
   },
+  // redirects: async () => {
+  //   return [
+  //     {
+  //       source: "/:path*",
+  //       has: [{ type: "header", key: "host", value: "www.kangtlee.com" }],
+  //       destination: "https://kangtlee.com/:path*",
+  //       permanent: true,
+  //     },
+  //   ];
+  // },
   // …
 };
 
