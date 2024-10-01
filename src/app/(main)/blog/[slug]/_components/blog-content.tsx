@@ -5,8 +5,11 @@ import { formatDateToThaiDate } from "@/lib/format/format-date";
 import { DotIcon } from "lucide-react";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
+import "katex/dist/katex.min.css";
 import "./blog.css";
 import { TagsSection } from "./tags-section";
+import { ContentWithLatex } from "./content-with-latex";
+
 interface BlogContentProps {
   post: GetPostResponse;
 }
@@ -30,6 +33,12 @@ export const BlogContent = ({ post }: BlogContentProps) => {
         <Image alt={post.title} src={post.imgUrl} height={630} width={1200} />
       </div>
       {/* Body */}
+      <ContentWithLatex>
+        <div
+          className="ProseMirror prose-headings:font-title font-default prose prose-lg -mx-2.5 w-screen dark:prose-invert focus:outline-none md:mx-auto md:w-full md:max-w-screen-lg"
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        ></div>
+      </ContentWithLatex>
       <div
         dangerouslySetInnerHTML={{ __html: post.content }}
         className={cn(
