@@ -23,7 +23,18 @@ const InvoiceGeneratorPage = () => {
         </CardContent>
       </Card>
       <Card>
-        <CardContent className="p-6">
+        <CardHeader>
+          <h2>คำแนะนำการใช้งานแอพสร้างใบแจ้งหนี้ ออนไลน์</h2>
+        </CardHeader>
+        <CardContent>
+          <p>
+            อ่านวิธีใช้งานแอพสร้างใบแจ้งหนี้ ใบเสร็จรับเงินออนไลน์ได้ที่
+            <Button asChild variant="link">
+              <Link href="/blog/invoice-generator-tutorial" target="_blank">
+                แนะนำแอพสร้างใบแจ้งหนี้ ใบกำกับภาษี
+              </Link>
+            </Button>
+          </p>
           <p>
             หากพบข้อผิดพลาด หรือต้องการให้เราเพิ่มฟีเจอร์เสริม
             สามารถติดต่อเราได้ที่
