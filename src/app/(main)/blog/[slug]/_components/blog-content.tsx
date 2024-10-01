@@ -39,14 +39,6 @@ export const BlogContent = ({ post }: BlogContentProps) => {
           dangerouslySetInnerHTML={{ __html: post.content }}
         ></div>
       </ContentWithLatex>
-      <div
-        dangerouslySetInnerHTML={{ __html: post.content }}
-        className={cn(
-          "ProseMirror",
-          "prose-headings:font-title font-default prose prose-lg dark:prose-invert focus:outline-none",
-          "-mx-2.5 w-screen md:mx-auto md:w-full md:max-w-screen-lg",
-        )}
-      ></div>
       {/* Author Card */}
       <AuthorCard author={post.author} />
       {/* Tags */}
