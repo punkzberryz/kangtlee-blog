@@ -4,17 +4,34 @@ import { InternalServerError } from "@/lib/error";
 import { catchErrorForServerActionHelper } from "@/lib/error/catch-error-action-helper";
 
 export const getPosts = cache(
-  async (options: { includeNotPublished?: boolean } = {}) => {
+  async (
+    options: {
+      includeNotPublished?: boolean;
+      limit?: number;
+      pageId?: number;
+    } = {},
+  ) => {
+    const pageId = options.pageId || 1;
+    const limit = options.limit || 20;
     try {
-      const posts = await db.post.findMany({
-        orderBy: {
-          id: "desc",
-        },
-        where: {
-          isPublished: options.includeNotPublished ? undefined : true,
-        },
-      });
-      return { posts };
+      const [posts, totalPosts] = await Promise.all([
+        db.post.findMany({
+          orderBy: {
+            id: "desc",
+          },
+          where: {
+            isPublished: options.includeNotPublished ? undefined : true,
+          },
+          take: limit,
+          skip: (pageId - 1) * limit,
+        }),
+        db.post.count({
+          where: {
+            isPublished: options.includeNotPublished ? undefined : true,
+          },
+        }),
+      ]);
+      return { posts, totalPosts };
     } catch (err) {
       const error = catchErrorForServerActionHelper(err);
       return { error };
