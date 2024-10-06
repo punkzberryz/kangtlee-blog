@@ -10,3 +10,5 @@ pull:
 	docker pull ghcr.io/punkzberryz/kangtlee-blog:latest
 logs:
 	docker logs --follow kangtlee-blog-next-app-1
+re-up:
+	docker-compose up -d
