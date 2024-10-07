@@ -2,7 +2,25 @@ import { cache } from "react";
 import { db } from "@/lib/db";
 import { InternalServerError } from "@/lib/error";
 import { catchErrorForServerActionHelper } from "@/lib/error/catch-error-action-helper";
-
+/**
+ * Fetches paginated blog posts from the database.
+ *
+ * This function is cached to improve performance on repeated calls.
+ * It supports pagination and can optionally include unpublished posts.
+ *
+ * @param options An object containing optional parameters:
+ *   - includeNotPublished: If true, includes unpublished posts in the result.
+ *   - limit: The number of posts to fetch per page (default: 20).
+ *   - pageId: The page number to fetch (default: 1).
+ *
+ * @returns An object containing:
+ *   - posts: An array of fetched blog posts.
+ *   - totalPosts: The total count of posts (respecting the publication filter).
+ *   - error: Any error that occurred during the fetch operation.
+ *
+ * The function uses Promise.all to concurrently fetch posts and the total count,
+ * optimizing database queries. It also handles errors using a custom helper function.
+ */
 export const getPosts = cache(
   async (
     options: {
@@ -11,20 +29,25 @@ export const getPosts = cache(
       pageId?: number;
     } = {},
   ) => {
+    // Set default values for pagination
     const pageId = options.pageId || 1;
     const limit = options.limit || 20;
     try {
+      // Use Promise.all to concurrently fetch posts and total count
       const [posts, totalPosts] = await Promise.all([
+        // Fetch paginated posts
         db.post.findMany({
           orderBy: {
-            id: "desc",
+            id: "desc", // Order by id descending (newest first)
           },
           where: {
+            // Include unpublished posts if specified, otherwise only published
             isPublished: options.includeNotPublished ? undefined : true,
           },
-          take: limit,
-          skip: (pageId - 1) * limit,
+          take: limit, // Number of posts per page
+          skip: (pageId - 1) * limit, // Calculate offset for pagination
         }),
+        // Count total number of posts (respecting the publication filter)
         db.post.count({
           where: {
             isPublished: options.includeNotPublished ? undefined : true,
