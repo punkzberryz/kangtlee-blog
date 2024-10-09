@@ -3,6 +3,7 @@ import { BlogPreviewItem } from "./blog-preview-item";
 import { getPosts } from "./fetch-post";
 import { notFound } from "next/navigation";
 import { BlogPagination } from "./blog-pagination";
+import { unstable_cache } from "next/cache";
 
 export const FetchBlogPage = ({ pageId }: { pageId: number }) => {
   return (
@@ -13,11 +14,24 @@ export const FetchBlogPage = ({ pageId }: { pageId: number }) => {
 };
 
 const AsyncBlogPages = async ({ pageId }: { pageId: number }) => {
-  const { posts, totalPosts, error } = await getPosts({
-    includeNotPublished: false,
-    limit: LIMIT,
-    pageId,
-  });
+  const { error, posts, totalPosts } = await unstable_cache(
+    async () => {
+      return getPosts({
+        includeNotPublished: false,
+        limit: LIMIT,
+        pageId,
+      });
+    },
+    ["fetchblogspage", pageId.toString()],
+    {
+      revalidate: 3600, // 1 hour
+    },
+  )();
+  // const { posts, totalPosts, error } = await getPosts({
+  //   includeNotPublished: false,
+  //   limit: LIMIT,
+  //   pageId,
+  // });
   if (error || !posts || posts.length === 0 || !totalPosts) {
     return notFound();
   }
