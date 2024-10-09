@@ -5,7 +5,7 @@ down:
 prune:
 	docker system prune
 build:
-	docker build . --platform linux/amd64 -t ghcr.io/punkzberryz/kangtlee-blog
+	docker build . --platform linux/amd64 -t ghcr.io/punkzberryz/kangtlee-blog:latest
 pull:
 	docker pull ghcr.io/punkzberryz/kangtlee-blog:latest
 logs:
