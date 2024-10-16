@@ -27,6 +27,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   } catch (err) {}
   const routes: MetadataRoute.Sitemap = ([] = [
     "",
+    "/ic-design",
     "/contact",
     "/tools/buddhist-year-to-current-year",
     "/tools/image-background-remove",

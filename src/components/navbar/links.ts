@@ -1,6 +1,10 @@
 export const LINKS: LinkProps[] = [
   { href: "/", label: "บทความ" },
   {
+    href: "/ic-design",
+    label: "IC Design",
+  },
+  {
     href: "/tools",
     label: "เครื่องมือ",
     sublinks: [
