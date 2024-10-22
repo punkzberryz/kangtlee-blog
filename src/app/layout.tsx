@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ToastProvider } from "@/components/providers/toast-provider";
 import { config } from "@/lib/config";
 import QueryProvider from "@/components/providers/query-provider";
+import { GoogleAdsenseProvider } from "@/components/google-ads/google-adsense-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,6 +54,7 @@ export default function RootLayout({
           <QueryProvider>{children}</QueryProvider>
           <ToastProvider />
         </ThemeProvider>
+        <GoogleAdsenseProvider pId={config.googleAdsenseId} />
       </body>
     </html>
   );

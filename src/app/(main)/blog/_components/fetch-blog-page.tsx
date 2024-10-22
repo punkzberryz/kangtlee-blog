@@ -1,9 +1,8 @@
 import { Suspense } from "react";
 import { BlogPreviewItem } from "./blog-preview-item";
 import { getPosts } from "./fetch-post";
-import { notFound } from "next/navigation";
 import { BlogPagination } from "./blog-pagination";
-import { unstable_cache } from "next/cache";
+import { revalidatePath, unstable_cache } from "next/cache";
 
 export const FetchBlogPage = ({ pageId }: { pageId: number }) => {
   return (
@@ -27,13 +26,11 @@ const AsyncBlogPages = async ({ pageId }: { pageId: number }) => {
       revalidate: 3600, // 1 hour
     },
   )();
-  // const { posts, totalPosts, error } = await getPosts({
-  //   includeNotPublished: false,
-  //   limit: LIMIT,
-  //   pageId,
-  // });
+
   if (error || !posts || posts.length === 0 || !totalPosts) {
-    return notFound();
+    revalidatePath("/");
+    revalidatePath(`/blog/page/${pageId}`);
+    return null;
   }
   const totalPages = Math.ceil(totalPosts / LIMIT);
   return (
