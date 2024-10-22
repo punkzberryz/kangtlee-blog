@@ -45,6 +45,15 @@ const LINKS: CardItemProps[] = [
       },
     ],
   },
+  {
+    title: "การ Simulate วงจร: ",
+    links: [
+      {
+        description: "การ Simulate วงจรออปแอมป์ (Opamp) ด้วย Cadence Spectre",
+        href: "/blog/opamp-simulation-setup",
+      },
+    ],
+  },
 ];
 
 type CardItemProps = { title: string; links: LinkItemProps[] };
