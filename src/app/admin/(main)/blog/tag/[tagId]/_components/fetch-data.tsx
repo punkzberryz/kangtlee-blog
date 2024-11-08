@@ -1,5 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { validateRequest } from "@/lib/auth";
+import { validateRequestOnServerComponent } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { UnauthorizedError, UnauthorizedMessageCode } from "@/lib/error";
 import { Suspense } from "react";
@@ -26,7 +26,7 @@ async function FetchDataAsync({ tagId, title, isNew }: FetchDataProps) {
         where: { id: tagId },
       });
   //validate user
-  const userReq = validateRequest();
+  const userReq = validateRequestOnServerComponent();
   const [tag, { user }] = await Promise.all([tagReq, userReq]);
   if (!user) throw new UnauthorizedError(UnauthorizedMessageCode.notAuthorized);
   return <TagForm initialData={tag} isNew={isNew} title={title} />;

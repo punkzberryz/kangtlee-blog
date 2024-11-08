@@ -1,5 +1,5 @@
 import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
-import { validateRequest } from "@/lib/auth";
+import { validateRequestOnServerComponent } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { UnauthorizedError, UnauthorizedMessageCode } from "@/lib/error";
 import { Post } from "@prisma/client";
@@ -23,7 +23,7 @@ const FetchBlogs = async () => {
       id: "desc",
     },
   });
-  const userReq = validateRequest();
+  const userReq = validateRequestOnServerComponent();
   const [blogs, { user }] = await Promise.all([blogsReq, userReq]);
   if (!user) throw new UnauthorizedError(UnauthorizedMessageCode.notAuthorized);
   const hasMore = blogs.length === BLOGS_LIMIT;

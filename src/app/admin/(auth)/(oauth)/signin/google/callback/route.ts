@@ -1,7 +1,12 @@
 import { cookies } from "next/headers";
 import { OAuth2RequestError } from "arctic";
 import { generateIdFromEntropySize } from "lucia";
-import { google, lucia } from "@/lib/auth";
+import {
+  createSession,
+  generateSessionToken,
+  google,
+  setSessionTokenCookie,
+} from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { config } from "@/lib/config";
@@ -52,13 +57,9 @@ export async function GET(req: NextRequest) {
 
     if (existingUser) {
       //user exists, let's login
-      const session = await lucia.createSession(existingUser.id, {});
-      const sessionCookie = lucia.createSessionCookie(session.id);
-      cookies().set(
-        sessionCookie.name,
-        sessionCookie.value,
-        sessionCookie.attributes,
-      );
+      const newToken = generateSessionToken();
+      const session = await createSession(newToken, existingUser.id);
+      setSessionTokenCookie(newToken, session.expiresAt);
       return NextResponse.json(null, {
         status: 302,
         headers: {
@@ -110,13 +111,10 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    const session = await lucia.createSession(userId, {});
-    const sessionCookie = lucia.createSessionCookie(session.id);
-    cookies().set(
-      sessionCookie.name,
-      sessionCookie.value,
-      sessionCookie.attributes,
-    );
+    const newToken = generateSessionToken();
+    const session = await createSession(newToken, userId);
+    setSessionTokenCookie(newToken, session.expiresAt);
+
     return NextResponse.json(null, {
       status: 302,
       headers: {

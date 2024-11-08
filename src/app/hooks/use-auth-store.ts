@@ -1,5 +1,5 @@
 import { config } from "@/lib/config";
-import { User } from "lucia";
+import { User } from "@prisma/client";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 

@@ -13,6 +13,8 @@
     "@imgly/background-removal": "^1.5.5",
     "@lucia-auth/adapter-prisma": "^4.0.1",
     "@next/third-parties": "^14.2.6",
+    "@oslojs/crypto": "^1.0.1",
+    "@oslojs/encoding": "^1.1.0",
     "@prisma/client": "5.18.0",
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-avatar": "^1.1.0",

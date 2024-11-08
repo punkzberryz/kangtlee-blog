@@ -1,5 +1,5 @@
 import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
-import { validateRequest } from "@/lib/auth";
+import { validateRequestOnServerComponent } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { UnauthorizedError, UnauthorizedMessageCode } from "@/lib/error";
 import { Suspense } from "react";
@@ -21,7 +21,7 @@ const FetchCategories = async () => {
       id: "desc",
     },
   });
-  const userReq = validateRequest();
+  const userReq = validateRequestOnServerComponent();
   const [categories, { user }] = await Promise.all([categoriesReq, userReq]);
   if (!user) throw new UnauthorizedError(UnauthorizedMessageCode.notAuthorized);
   const hasMore = categories.length === CATEGORIES_LIMIT;

@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { BlogForm } from "./blog-form";
 import { Skeleton } from "@/components/ui/skeleton";
 import { db } from "@/lib/db";
-import { validateRequest } from "@/lib/auth";
+import { validateRequestOnServerComponent } from "@/lib/auth";
 import { UnauthorizedError, UnauthorizedMessageCode } from "@/lib/error";
 import { FetchPostById } from "../../_components/fetch-data";
 
@@ -26,7 +26,7 @@ async function FetchDataAsync({ blogId, title, isNew }: FetchDataProps) {
   const categoriesReq = db.postCategory.findMany({
     orderBy: { id: "desc" },
   });
-  const userReq = validateRequest();
+  const userReq = validateRequestOnServerComponent();
   const postReq = isNew
     ? null
     : db.post.findUnique({

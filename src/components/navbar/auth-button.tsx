@@ -14,11 +14,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { User } from "lucia";
 import { Button } from "../ui/button";
 import { HomeIcon, LayoutGrid, UserIcon } from "lucide-react";
 import Link from "next/link";
 import { SignOutDropdownItem } from "./signout-button";
+import { User } from "@prisma/client";
+
 export const AuthButton = ({ user }: { user: User }) => {
   return (
     <DropdownMenu>

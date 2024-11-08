@@ -1,5 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { validateRequest } from "@/lib/auth";
+import { validateRequestOnServerComponent } from "@/lib/auth";
 import { db } from "@/lib/db";
 import {
   BadRequestError,
@@ -25,7 +25,7 @@ async function FetchDataAsync({ authorId, title }: FetchDataProps) {
   //fetch all categories
   const authorReq = db.user.findUnique({ where: { id: authorId } });
   //validate user
-  const userReq = validateRequest();
+  const userReq = validateRequestOnServerComponent();
   const [author, { user }] = await Promise.all([authorReq, userReq]);
   if (!user) throw new UnauthorizedError(UnauthorizedMessageCode.notAuthorized);
   if (!author) throw new BadRequestError();

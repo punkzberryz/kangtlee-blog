@@ -1,5 +1,5 @@
 import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
-import { validateRequest } from "@/lib/auth";
+import { validateRequestOnServerComponent } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { UnauthorizedError, UnauthorizedMessageCode } from "@/lib/error";
 import { Suspense } from "react";
@@ -17,7 +17,7 @@ const FetchAuthors = async () => {
     skip: (AUTHORS_PAGE_ID - 1) * AUTHORS_LIMIT,
     take: AUTHORS_LIMIT,
   });
-  const userReq = validateRequest();
+  const userReq = validateRequestOnServerComponent();
   const [authors, { user }] = await Promise.all([authorsReq, userReq]);
   if (!user) throw new UnauthorizedError(UnauthorizedMessageCode.notAuthorized);
   const hasMore = authors.length === AUTHORS_LIMIT;

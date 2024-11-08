@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { Skeleton } from "../../ui/skeleton";
-import { validateRequest } from "@/lib/auth";
+import { validateRequestOnServerComponent } from "@/lib/auth";
 import { AuthButton } from "../auth-button";
 import { notFound } from "next/navigation";
 
@@ -14,7 +14,7 @@ export const AuthNav = () => {
 };
 
 const FetchUser = async () => {
-  const { user } = await validateRequest();
+  const { user } = await validateRequestOnServerComponent();
   if (!user) {
     notFound();
   }
