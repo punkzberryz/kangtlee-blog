@@ -1,11 +1,11 @@
 import { cookies } from "next/headers";
 import { OAuth2RequestError } from "arctic";
-import { generateIdFromEntropySize } from "lucia";
 import {
   createSession,
   generateSessionToken,
   google,
   setSessionTokenCookie,
+  generateIdFromEntropySize,
 } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";

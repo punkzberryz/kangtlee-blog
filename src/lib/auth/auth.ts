@@ -9,6 +9,11 @@ import { sha256 } from "@oslojs/crypto/sha2";
 import { db } from "../db";
 import { COOKIE_NAME } from "../config";
 
+export const generateIdFromEntropySize = (size: number) => {
+  const bytes = crypto.getRandomValues(new Uint8Array(size)); //size=10 ==> 16 characters long
+  return encodeBase32LowerCaseNoPadding(bytes);
+};
+
 export const generateSessionToken = (): string => {
   const bytes = new Uint8Array(20);
   crypto.getRandomValues(bytes);

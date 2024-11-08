@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { OAuth2RequestError } from "arctic";
-import { generateIdFromEntropySize } from "lucia";
 import {
+  generateIdFromEntropySize,
   createSession,
   generateSessionToken,
   line,
