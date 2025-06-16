@@ -3,9 +3,10 @@ import { BadRequestError } from "@/lib/error";
 import { FetchData } from "./_components/fetch-data";
 
 interface TagByIdPageProps {
-  params: { tagId: string };
+  params: Promise<{ tagId: string }>;
 }
-const TagByIdPage = ({ params }: TagByIdPageProps) => {
+const TagByIdPage = async (props: TagByIdPageProps) => {
+  const params = await props.params;
   const isNew = params.tagId === "new";
   const title = `${isNew ? "สร้าง" : "แก้ไข"}หมวดหมู่ | Tag`;
   //validate tagId is number
@@ -41,7 +42,8 @@ const TagByIdPage = ({ params }: TagByIdPageProps) => {
 };
 export default TagByIdPage;
 
-export function generateMetadata({ params }: TagByIdPageProps) {
+export async function generateMetadata(props: TagByIdPageProps) {
+  const params = await props.params;
   const title = `${params.tagId === "new" ? "สร้าง" : "แก้ไข"} tag | Tag`;
   return {
     title,

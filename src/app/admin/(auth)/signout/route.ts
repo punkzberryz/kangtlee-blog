@@ -2,16 +2,16 @@ import { deleteSessionTokenCookie, validateRequest } from "@/lib/auth";
 import { UnauthorizedError } from "@/lib/error";
 import { catchRouteErrorHelper } from "@/lib/error/catch-route-error-helper";
 import { unstable_noStore } from "next/cache";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export const GET = async (req: NextRequest) => {
+export const GET = async () => {
   unstable_noStore();
   try {
     const { session, user } = await validateRequest();
     if (!session || !user) {
       throw new UnauthorizedError("invalid session");
     }
-    deleteSessionTokenCookie();
+    await deleteSessionTokenCookie();
     return NextResponse.json({});
   } catch (err) {
     return catchRouteErrorHelper(err, "GET api/auth/signout");

@@ -2,9 +2,10 @@ import { PageWrapper } from "@/components/navbar/admin-sidenav/page-wrapper";
 import { BadRequestError } from "@/lib/error";
 import { FetchData } from "./_components/fetch-data";
 interface BlogByIdPageProps {
-  params: { blogId: string };
+  params: Promise<{ blogId: string }>;
 }
-const NewBlogPage = async ({ params }: BlogByIdPageProps) => {
+const NewBlogPage = async (props: BlogByIdPageProps) => {
+  const params = await props.params;
   const isNew = params.blogId === "new";
   const title = `${isNew ? "สร้าง" : "แก้ไข"}บทความ | Blog`;
 
@@ -36,7 +37,8 @@ const NewBlogPage = async ({ params }: BlogByIdPageProps) => {
 };
 
 export default NewBlogPage;
-export function generateMetadata({ params }: BlogByIdPageProps) {
+export async function generateMetadata(props: BlogByIdPageProps) {
+  const params = await props.params;
   const title = `${params.blogId === "new" ? "สร้าง" : "แก้ไข"}บทความ | Blog`;
   return {
     title,

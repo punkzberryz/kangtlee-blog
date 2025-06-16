@@ -72,8 +72,11 @@ export type SessionValidationResult =
   | { session: Session; user: User }
   | { session: null; user: null };
 
-export const setSessionTokenCookie = (token: string, expiresAt: Date): void => {
-  const cookieStore = cookies();
+export const setSessionTokenCookie = async (
+  token: string,
+  expiresAt: Date,
+): Promise<void> => {
+  const cookieStore = await cookies();
   cookieStore.set(COOKIE_NAME, token, {
     httpOnly: true,
     sameSite: "lax",
@@ -83,8 +86,8 @@ export const setSessionTokenCookie = (token: string, expiresAt: Date): void => {
   });
 };
 
-export const deleteSessionTokenCookie = () => {
-  const cookieStore = cookies();
+export const deleteSessionTokenCookie = async () => {
+  const cookieStore = await cookies();
   cookieStore.set(COOKIE_NAME, "", {
     httpOnly: true,
     sameSite: "lax",
@@ -94,7 +97,7 @@ export const deleteSessionTokenCookie = () => {
   });
 };
 
-const getTokenId = () => cookies().get(COOKIE_NAME)?.value;
+const getTokenId = async () => (await cookies()).get(COOKIE_NAME)?.value;
 /*
   We separate validateRequest into two functions:
   - validateRequestOnServerComponent: for server component
@@ -106,7 +109,7 @@ const getTokenId = () => cookies().get(COOKIE_NAME)?.value;
 */
 export const validateRequestOnServerComponent = cache(async () => {
   //In server component, we can't set cookie
-  let token = getTokenId() ?? null;
+  let token = (await getTokenId()) ?? null;
   if (!token) {
     return {
       user: null,
@@ -126,7 +129,7 @@ export const validateRequestOnServerComponent = cache(async () => {
 });
 
 export const validateRequest = cache(async () => {
-  let token = getTokenId() ?? null;
+  let token = (await getTokenId()) ?? null;
   // console.log(`[validateRequest] sessionId: ${sessionId}`);
   if (!token) {
     return {
@@ -140,10 +143,10 @@ export const validateRequest = cache(async () => {
     //if not expired, we have session back
     if (result.session) {
       //update cookie regardless of fresh or not
-      setSessionTokenCookie(token, result.session.expiresAt);
+      await setSessionTokenCookie(token, result.session.expiresAt);
     } else {
       //if expired, delete cookie
-      deleteSessionTokenCookie();
+      await deleteSessionTokenCookie();
     }
   } catch (err) {
     console.error(`[ERROR - validateRequest] `, err);

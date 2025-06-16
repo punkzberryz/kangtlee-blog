@@ -4,12 +4,18 @@ import { config } from "@/lib/config";
 import { getPost, getPosts } from "../_components/fetch-post";
 
 interface BlogPageBySlugProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
-const BlogPageBySlug = ({ params: { slug } }: BlogPageBySlugProps) => {
+const BlogPageBySlug = async (props: BlogPageBySlugProps) => {
+  const params = await props.params;
+
+  const {
+    slug
+  } = params;
+
   return <FetchBlog slug={slug} />;
 };
 
@@ -24,9 +30,13 @@ export async function generateStaticParams() {
   return posts.map((p) => ({ slug: p?.slug }));
 }
 
-export async function generateMetadata({
-  params: { slug },
-}: BlogPageBySlugProps): Promise<Metadata> {
+export async function generateMetadata(props: BlogPageBySlugProps): Promise<Metadata> {
+  const params = await props.params;
+
+  const {
+    slug
+  } = params;
+
   const { post, error } = await getPost(slug, { includeNotPublished: true });
   if (error) {
     return metadataNotFound;

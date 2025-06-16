@@ -6,11 +6,12 @@ import { getPosts, getPostsByTagName } from "../../_components/fetch-post";
 import { Metadata } from "next";
 
 interface BlogsByTagPageProps {
-  params: {
+  params: Promise<{
     tagName: string;
-  };
+  }>;
 }
-const BlogsByTagPage = ({ params }: BlogsByTagPageProps) => {
+const BlogsByTagPage = async (props: BlogsByTagPageProps) => {
+  const params = await props.params;
   const parsed = queryString.parse(params.tagName);
   let tagName = "";
   Object.keys(parsed).forEach((key) => {
@@ -29,7 +30,8 @@ const BlogsByTagPage = ({ params }: BlogsByTagPageProps) => {
 
 export default BlogsByTagPage;
 
-export function generateMetadata({ params }: BlogsByTagPageProps): Metadata {
+export async function generateMetadata(props: BlogsByTagPageProps): Promise<Metadata> {
+  const params = await props.params;
   const parsed = queryString.parse(params.tagName);
   let tagName = "";
   Object.keys(parsed).forEach((key) => {
