@@ -12,12 +12,14 @@ import { db } from "@/lib/db";
 import { config } from "@/lib/config";
 
 export async function GET(req: NextRequest) {
+  const cookieStorePromise = cookies();
   const url = new URL(req.url);
   const code = url.searchParams.get("code");
   const state = url.searchParams.get("state");
-  const storedState = cookies().get("line_oauth_state")?.value ?? null;
+  const cookieStore = await cookieStorePromise;
+  const storedState = cookieStore.get("line_oauth_state")?.value ?? null;
   const storeCodeVerifier =
-    cookies().get("line_oauth_code_verifier")?.value ?? null;
+    cookieStore.get("line_oauth_code_verifier")?.value ?? null;
   if (
     !code ||
     !state ||
@@ -36,11 +38,12 @@ export async function GET(req: NextRequest) {
       storeCodeVerifier,
     );
 
+    const accessToken = tokens.accessToken();
     const lineUserResponse = await fetch(
       "https://api.line.me/oauth2/v2.1/userinfo",
       {
         headers: {
-          Authorization: `Bearer ${tokens.accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       },
     );
@@ -58,7 +61,7 @@ export async function GET(req: NextRequest) {
       //user exists, let's login
       const newToken = generateSessionToken();
       const session = await createSession(newToken, existingUser.id);
-      setSessionTokenCookie(newToken, session.expiresAt);
+      await setSessionTokenCookie(newToken, session.expiresAt);
       return NextResponse.json(null, {
         status: 302,
         headers: {
@@ -68,7 +71,7 @@ export async function GET(req: NextRequest) {
     }
 
     //user not found, let's check if there is a secret
-    const secret = cookies().get("admin_secret")?.value ?? null;
+    const secret = cookieStore.get("admin_secret")?.value ?? null;
 
     if (!secret) {
       //secret not found, let's redirect to signup
@@ -93,7 +96,7 @@ export async function GET(req: NextRequest) {
     //secret match, let's create new user
 
     //clear secret
-    cookies().set("admin_secret", "some_secret", {
+    cookieStore.set("admin_secret", "some_secret", {
       path: "/",
       secure: process.env.NODE_ENV === "production",
       httpOnly: true,
@@ -114,7 +117,7 @@ export async function GET(req: NextRequest) {
 
     const newToken = generateSessionToken();
     const session = await createSession(newToken, userId);
-    setSessionTokenCookie(newToken, session.expiresAt);
+    await setSessionTokenCookie(newToken, session.expiresAt);
 
     return NextResponse.json(null, {
       status: 302,

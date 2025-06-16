@@ -3,9 +3,10 @@ import { BadRequestError } from "@/lib/error";
 import { FetchData } from "./_components/fetch-data";
 
 interface CategoryByIdPageProps {
-  params: { categoryId: string };
+  params: Promise<{ categoryId: string }>;
 }
-const CategoryByIdPage = ({ params }: CategoryByIdPageProps) => {
+const CategoryByIdPage = async (props: CategoryByIdPageProps) => {
+  const params = await props.params;
   const isNew = params.categoryId === "new";
   const title = `${isNew ? "สร้าง" : "แก้ไข"}หมวดหมู่ | Category`;
   //validate categoryId is number
@@ -41,7 +42,8 @@ const CategoryByIdPage = ({ params }: CategoryByIdPageProps) => {
 };
 export default CategoryByIdPage;
 
-export function generateMetadata({ params }: CategoryByIdPageProps) {
+export async function generateMetadata(props: CategoryByIdPageProps) {
+  const params = await props.params;
   const title = `${params.categoryId === "new" ? "สร้าง" : "แก้ไข"}หมวดหมู่ | Category`;
   return {
     title,

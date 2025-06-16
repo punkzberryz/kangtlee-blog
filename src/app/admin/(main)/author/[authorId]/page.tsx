@@ -2,9 +2,10 @@ import { PageWrapper } from "@/components/navbar/admin-sidenav/page-wrapper";
 import { FetchData } from "./_components/fetch-data";
 
 interface AuthorByIdPageProps {
-  params: { authorId: string };
+  params: Promise<{ authorId: string }>;
 }
-const AuthorByIdPage = ({ params }: AuthorByIdPageProps) => {
+const AuthorByIdPage = async (props: AuthorByIdPageProps) => {
+  const params = await props.params;
   const title = "แก้ไขผู้เขียน | Author";
 
   return (

@@ -45,7 +45,10 @@ export const ContentWithLatex = ({ children }: ContentWithLatexProps) => {
 
     // Cleanup function to unmount all created React roots when the component unmounts
     return () => {
-      roots.forEach((root) => root.unmount());
+      roots.forEach((root) => {
+        //BUG: found race condition error, try to explore more
+        root.unmount();
+      });
     };
   }, []); // Empty dependency array means this effect runs once on mount
 

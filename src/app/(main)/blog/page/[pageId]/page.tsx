@@ -4,9 +4,10 @@ import { FetchBlogPage } from "../../_components/fetch-blog-page";
 import { getPosts } from "../../_components/fetch-post";
 
 interface BlogsByPageIdProps {
-  params: { pageId: string };
+  params: Promise<{ pageId: string }>;
 }
-const BlogsByPageId = ({ params }: BlogsByPageIdProps) => {
+const BlogsByPageId = async (props: BlogsByPageIdProps) => {
+  const params = await props.params;
   const id = parseInt(params.pageId);
   if (isNaN(id)) {
     return notFound();
@@ -58,7 +59,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export function generateMetadata({ params }: BlogsByPageIdProps): Metadata {
+export async function generateMetadata(props: BlogsByPageIdProps): Promise<Metadata> {
+  const params = await props.params;
   return {
     title: `บทความ - หน้า ${params.pageId}`,
     description:

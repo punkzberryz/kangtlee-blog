@@ -4,22 +4,23 @@ import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
+  const cookieStorePromise = cookies();
   const query = req.nextUrl.searchParams;
   const secret = query.get("secret");
   const state = generateState();
   const codeVerifier = generateCodeVerifier();
-  const url = await line.createAuthorizationURL(state, codeVerifier, {
-    scopes: ["profile", "email"],
-  });
+  const scopes = ["profile", "email"];
+  const url = line.createAuthorizationURL(state, codeVerifier, scopes);
+  const cookieStore = await cookieStorePromise;
 
-  cookies().set("line_oauth_state", state, {
+  cookieStore.set("line_oauth_state", state, {
     path: "/",
     secure: process.env.NODE_ENV === "production",
     httpOnly: true,
     maxAge: 60 * 10,
     sameSite: "lax",
   });
-  cookies().set("line_oauth_code_verifier", codeVerifier, {
+  cookieStore.set("line_oauth_code_verifier", codeVerifier, {
     path: "/",
     secure: process.env.NODE_ENV === "production",
     httpOnly: true,
@@ -29,7 +30,7 @@ export async function GET(req: NextRequest) {
 
   // get admin secret from query param
   if (secret) {
-    cookies().set("admin_secret", secret, {
+    cookieStore.set("admin_secret", secret, {
       path: "/",
       secure: process.env.NODE_ENV === "production",
       httpOnly: true,
