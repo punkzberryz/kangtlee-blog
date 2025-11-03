@@ -31,10 +31,14 @@ services:
     networks:
       - default
       - web-proxy
+
 networks:
   default:
   web-proxy:
     external: true
+# DON'T FORGET TO RUN 'docker network create web-proxy' AT THE BEGINING TO CREATE THE NETWORK (1-time only)
+#
+
 # postgres:
 #   image: postgres:16.3-alpine3.20
 #   ports:
