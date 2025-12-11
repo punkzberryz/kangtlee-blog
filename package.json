@@ -6,12 +6,12 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@imgly/background-removal": "^1.5.5",
-    "@next/third-parties": "15.3.3",
+    "@next/third-parties": "16.0.9",
     "@oslojs/crypto": "^1.0.1",
     "@oslojs/encoding": "^1.1.0",
     "@prisma/client": "^6.9.0",
@@ -46,15 +46,15 @@
     "katex": "^0.16.11",
     "lowlight": "^3.1.0",
     "lucide-react": "^0.427.0",
-    "next": "15.3.7",
+    "next": "16.0.9",
     "next-themes": "^0.3.0",
     "nodemailer": "^6.9.14",
     "novel": "^0.5.0",
     "prisma": "^6.9.0",
     "query-string": "^9.1.0",
-    "react": "19.1.0",
+    "react": "19.2.2",
     "react-day-picker": "8.10.1",
-    "react-dom": "19.1.0",
+    "react-dom": "19.2.2",
     "react-hook-form": "^7.52.2",
     "react-loader-spinner": "^6.1.6",
     "react-pdf-tailwind": "^2.3.0",
@@ -72,10 +72,10 @@
     "@types/katex": "^0.16.7",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.15",
-    "@types/react": "19.1.8",
-    "@types/react-dom": "19.1.6",
-    "eslint": "^8",
-    "eslint-config-next": "15.3.3",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.9",
     "postcss": "^8",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.6",
@@ -84,8 +84,8 @@
   },
   "pnpm": {
     "overrides": {
-      "@types/react": "19.1.8",
-      "@types/react-dom": "19.1.6"
+      "@types/react": "19.2.7",
+      "@types/react-dom": "19.2.3"
     }
   }
 }
