@@ -14,14 +14,20 @@ WORKDIR /app
 #     elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
 #     else echo "Lockfile not found." && exit 1; \
 #     fi
+
+# DEBUG: List all files to prove if pnpm-lock.yaml is actually there
+RUN ls -la
+
 RUN \
     if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
     elif [ -f package-lock.json ]; then npm ci; \
     elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
-    # CHANGED: Instead of exit 1, we just run npm install
-    else echo "No lockfile found. Falling back to npm install..." && npm install; \
+    else \
+      echo "CRITICAL ERROR: No lockfile found!" && \
+      echo "Files in current directory:" && \
+      ls -la && \
+      exit 1; \
     fi
-
 
 # Rebuild the source code only when needed
 FROM base AS builder
