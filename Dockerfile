@@ -15,16 +15,18 @@ WORKDIR /app
 #     else echo "Lockfile not found." && exit 1; \
 #     fi
 
-# DEBUG: List all files to prove if pnpm-lock.yaml is actually there
-RUN ls -la
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 
+# DEBUG: Now this will actually show files
+RUN ls -la 
+
+# Install dependencies
 RUN \
     if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
     elif [ -f package-lock.json ]; then npm ci; \
     elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
     else \
       echo "CRITICAL ERROR: No lockfile found!" && \
-      echo "Files in current directory:" && \
       ls -la && \
       exit 1; \
     fi
