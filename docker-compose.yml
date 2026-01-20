@@ -11,6 +11,8 @@ services:
       #   ENV_VARIABLE: ${ENV_VARIABLE}
       #   NEXT_PUBLIC_ENV_VARIABLE: ${NEXT_PUBLIC_ENV_VARIABLE}
     restart: always
+    env_file:
+      - .env
     # ports:
     #   - 3000:3000
     # networks:
