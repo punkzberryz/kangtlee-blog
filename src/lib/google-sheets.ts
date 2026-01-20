@@ -1,8 +1,14 @@
 import { google } from "googleapis";
 
-const SPREADSHEET_ID = "11pdEnI8NP9XQ-VBSYAQD0A3egej6zyT1km_Bc_AYiAo";
+const getSheetId = () => {
+  const sheetId = process.env.GOOGLE_SHEET_ID;
+  if (!sheetId) {
+    throw new Error("Missing GOOGLE_SHEET_ID.");
+  }
+  return sheetId;
+};
 const SHEET_GID = 223705935;
-const SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
+const READ_SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
 
 export type ExpenseRow = {
   date: string;
@@ -27,7 +33,7 @@ const getPrivateKey = () => {
   return null;
 };
 
-const getSheetsClient = () => {
+export const getGoogleSheetsAuth = (scopes: string[] = READ_SCOPES) => {
   const clientEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL;
   const privateKey = getPrivateKey();
 
@@ -35,20 +41,20 @@ const getSheetsClient = () => {
     throw new Error("Missing Google Sheets credentials.");
   }
 
-  const auth = new google.auth.JWT({
+  return new google.auth.JWT({
     email: clientEmail,
     key: privateKey,
-    scopes: SCOPES,
+    scopes,
   });
-
-  return google.sheets({ version: "v4", auth });
 };
 
 export const fetchExpenseRows = async (): Promise<ExpenseRow[]> => {
-  const sheets = getSheetsClient();
+  const auth = getGoogleSheetsAuth();
+  const sheets = google.sheets({ version: "v4", auth });
 
+  const sheetId = getSheetId();
   const metadata = await sheets.spreadsheets.get({
-    spreadsheetId: SPREADSHEET_ID,
+    spreadsheetId: sheetId,
     fields: "sheets(properties(sheetId,title))",
   });
 
@@ -61,7 +67,7 @@ export const fetchExpenseRows = async (): Promise<ExpenseRow[]> => {
   }
 
   const response = await sheets.spreadsheets.values.get({
-    spreadsheetId: SPREADSHEET_ID,
+    spreadsheetId: sheetId,
     range: `${sheetTitle}!A:F`,
   });
 

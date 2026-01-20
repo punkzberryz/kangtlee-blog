@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { PageWrapper } from "@/components/navbar/admin-sidenav/page-wrapper";
 import { CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { ExpenseRow, fetchExpenseRows } from "@/lib/google-sheets";
 
 const ExpensePage = async () => {
@@ -26,10 +28,15 @@ const ExpensePage = async () => {
       title="Expense | Google Sheets"
     >
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <CardTitle>Expense from Google Sheets</CardTitle>
-        <div className="rounded-full bg-muted px-4 py-1 text-sm font-medium">
-          Total: {total.toLocaleString()}
+        <div className="flex flex-wrap items-center gap-3">
+          <CardTitle>Expense from Google Sheets</CardTitle>
+          <div className="rounded-full bg-muted px-4 py-1 text-sm font-medium">
+            Total: {total.toLocaleString()}
+          </div>
         </div>
+        <Button asChild>
+          <Link href="/admin/expense/new">Add Expense</Link>
+        </Button>
       </div>
 
       {errorMessage ? (

@@ -29,6 +29,7 @@ jobs:
             --build-arg GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}" \
             --build-arg GOOGLE_SHEETS_CLIENT_EMAIL="${{ secrets.GOOGLE_SHEETS_CLIENT_EMAIL }}" \
             --build-arg GOOGLE_SHEETS_PRIVATE_KEY_B64="${{ secrets.GOOGLE_SHEETS_PRIVATE_KEY_B64 }}" \
+            --build-arg GOOGLE_SHEET_ID="${{ secrets.GOOGLE_SHEET_ID }}" \
             --build-arg MAILER_EMAIL="${{ secrets.MAILER_EMAIL }}" \
             --build-arg MAILER_PASSWORD="${{ secrets.MAILER_PASSWORD }}" \
             .
