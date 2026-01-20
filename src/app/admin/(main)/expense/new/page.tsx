@@ -1,5 +1,4 @@
 import { PageWrapper } from "@/components/navbar/admin-sidenav/page-wrapper";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { ExpenseForm } from "./_components/expense-form";
 
 const AddNewExpensePage = () => {
@@ -11,13 +10,10 @@ const AddNewExpensePage = () => {
         { href: "#", title: "New" },
       ]}
       title="Add New Expense"
+      options={{ hasMaxWidth: true }}
     >
-      <Card className="w-full max-w-4xl">
-        <CardContent className="flex flex-col space-y-6 p-6">
-          <CardTitle>Add New Expense</CardTitle>
-          <ExpenseForm />
-        </CardContent>
-      </Card>
+      <div className="ml-auto" />
+      <ExpenseForm />
     </PageWrapper>
   );
 };

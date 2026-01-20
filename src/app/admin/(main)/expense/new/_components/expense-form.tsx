@@ -5,7 +5,7 @@ import { useState } from "react";
 import { FieldErrors, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { CustomInputField } from "@/components/custom-form-fields";
-import { CustomSelectField } from "@/components/custom-form-fields/custom-select-field";
+import { CustomRadioGroupField } from "@/components/custom-form-fields/custom-radio-group-field";
 import { CustomTextAreaField } from "@/components/custom-form-fields/custom-textarea-field";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
@@ -64,7 +64,7 @@ export const ExpenseForm = () => {
         className="space-y-6"
       >
         <div className="space-y-4">
-          <CustomSelectField
+          <CustomRadioGroupField
             control={form.control}
             name="category"
             label="Category"
