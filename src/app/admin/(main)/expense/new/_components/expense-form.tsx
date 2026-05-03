@@ -4,13 +4,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { FieldErrors, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { CustomInputField } from "@/components/custom-form-fields";
-import { CustomRadioGroupField } from "@/components/custom-form-fields/custom-radio-group-field";
-import { CustomTextAreaField } from "@/components/custom-form-fields/custom-textarea-field";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { LoadingBars } from "@/components/ui/loading-bars";
 import { addNewExpenseAction } from "./expense-action";
+import {
+  ExpenseInputField,
+  ExpenseRadioGroupField,
+  ExpenseTextAreaField,
+} from "./expense-fields";
 import {
   ExpenseSchema,
   expenseCategoryOptions,
@@ -64,7 +66,7 @@ export const ExpenseForm = () => {
         className="space-y-6"
       >
         <div className="space-y-4">
-          <CustomRadioGroupField
+          <ExpenseRadioGroupField
             control={form.control}
             name="category"
             label="Category"
@@ -73,24 +75,28 @@ export const ExpenseForm = () => {
               value: cat.value,
             }))}
           />
-          <CustomTextAreaField
-            control={form.control}
-            label="Description"
-            name="description"
-          />
-          <CustomInputField
+          <ExpenseInputField
             type="number"
             control={form.control}
             name="amount"
             label="Amount"
           />
+          <ExpenseTextAreaField
+            control={form.control}
+            label="Description"
+            name="description"
+          />
         </div>
         <div className="flex flex-col gap-4 md:flex-row-reverse">
-          <Button type="submit" className="min-w-[150px]" disabled={loading}>
+          <Button
+            type="submit"
+            className="h-9 min-w-[150px]"
+            disabled={loading}
+          >
             {loading ? <LoadingBars /> : "Submit"}
           </Button>
           <Button
-            className="min-w-[150px]"
+            className="h-9 min-w-[150px]"
             variant="secondary"
             onClick={() => form.reset()}
             disabled={loading}

@@ -41,7 +41,6 @@ ARG DIRECT_URL
 ARG NEXT_PUBLIC_GOOGLE_ANALYTICS_ID
 ARG NEXT_PUBLIC_URL
 ARG GOOGLE_SHEETS_CLIENT_EMAIL
-ARG GOOGLE_SHEETS_PRIVATE_KEY_B64
 ARG GOOGLE_SHEET_ID
 ARG NEXT_PUBLIC_CLOUDINARY_NAME
 ARG SIGNUP_ADMIN_SECRET
@@ -78,9 +77,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN corepack enable pnpm && pnpm prisma generate
 
-RUN export GOOGLE_SHEETS_PRIVATE_KEY=$(echo "$GOOGLE_SHEETS_PRIVATE_KEY_B64" | base64 -d) && \
-    corepack enable pnpm && \
-    pnpm run build
+RUN corepack enable pnpm && pnpm run build
 
 
 # Production image, copy all the files and run next

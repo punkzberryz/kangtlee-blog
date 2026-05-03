@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { BlogPreviewItem } from "./blog-preview-item";
 import { getPosts } from "./fetch-post";
 import { BlogPagination } from "./blog-pagination";
-import { revalidatePath, unstable_cache } from "next/cache";
+import { unstable_cache } from "next/cache";
 
 export const FetchBlogPage = ({ pageId }: { pageId: number }) => {
   return (
@@ -27,9 +27,11 @@ const AsyncBlogPages = async ({ pageId }: { pageId: number }) => {
     },
   )();
 
-  if (error || !posts || posts.length === 0 || !totalPosts) {
-    revalidatePath("/");
-    revalidatePath(`/blog/page/${pageId}`);
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  if (!posts || posts.length === 0 || !totalPosts) {
     return null;
   }
   const totalPages = Math.ceil(totalPosts / LIMIT);
