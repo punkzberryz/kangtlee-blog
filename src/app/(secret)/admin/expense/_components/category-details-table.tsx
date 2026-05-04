@@ -36,15 +36,15 @@ export const CategoryDetailsTable = ({
   onSelectCategory,
 }: CategoryDetailsTableProps) => {
   return (
-    <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+    <section className="min-w-0 rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <h3 className="text-lg font-semibold text-slate-950">
             Category details
           </h3>
           <p className="mt-1 text-sm text-slate-600">
-            Totals, transaction counts, and share of spend. Select a row to
-            load its purchase timeline.
+            Totals, transaction counts, and share of spend. Select a row to load
+            its purchase timeline.
           </p>
         </div>
         <p className="text-xs uppercase tracking-[0.16em] text-slate-500">
@@ -53,7 +53,7 @@ export const CategoryDetailsTable = ({
       </div>
 
       <div className="mt-4 overflow-hidden rounded-lg border border-slate-200">
-        <Table>
+        <Table className="min-w-[660px]">
           <TableHeader className="bg-slate-50">
             <TableRow>
               <TableHead>Category</TableHead>
@@ -73,7 +73,7 @@ export const CategoryDetailsTable = ({
                   data-state={isSelected ? "selected" : undefined}
                   className={cn(
                     "border-slate-200",
-                    isSelected && "bg-amber-50/70 hover:bg-amber-50/70"
+                    isSelected && "bg-amber-50/70 hover:bg-amber-50/70",
                   )}
                 >
                   <TableCell className="min-w-[13rem] font-medium text-slate-700">
@@ -83,7 +83,7 @@ export const CategoryDetailsTable = ({
                       onClick={() => onSelectCategory(category.category)}
                       className={cn(
                         "flex w-full flex-col items-start rounded-md px-2 py-1.5 text-left transition-colors hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-300",
-                        isSelected && "text-slate-950"
+                        isSelected && "text-slate-950",
                       )}
                     >
                       <span>{category.category}</span>

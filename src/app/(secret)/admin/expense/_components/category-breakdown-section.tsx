@@ -42,18 +42,20 @@ export const CategoryBreakdownSection = ({
     selectedMonth === ALL_YEAR_VALUE ? null : Number(selectedMonth);
   const categoryBreakdownData = useMemo(
     () => getCategoryBreakdownData(rows, selectedYear, monthIndex),
-    [rows, selectedYear, monthIndex]
+    [rows, selectedYear, monthIndex],
   );
   const [selectedCategoryPreference, setSelectedCategoryPreference] = useState<
     string | null
   >(null);
   const scopeLabel =
-    monthIndex === null ? selectedYear : `${MONTH_LABELS[monthIndex]} ${selectedYear}`;
+    monthIndex === null
+      ? selectedYear
+      : `${MONTH_LABELS[monthIndex]} ${selectedYear}`;
   const selectedCategory = useMemo(() => {
     if (
       selectedCategoryPreference &&
       categoryBreakdownData.categoryData.some(
-        (entry) => entry.category === selectedCategoryPreference
+        (entry) => entry.category === selectedCategoryPreference,
       )
     ) {
       return selectedCategoryPreference;
@@ -64,9 +66,9 @@ export const CategoryBreakdownSection = ({
   const selectedCategoryData = useMemo(
     () =>
       categoryBreakdownData.categoryData.find(
-        (entry) => entry.category === selectedCategory
+        (entry) => entry.category === selectedCategory,
       ) ?? null,
-    [categoryBreakdownData.categoryData, selectedCategory]
+    [categoryBreakdownData.categoryData, selectedCategory],
   );
   const selectedCategoryItems = useMemo(
     () =>
@@ -75,14 +77,14 @@ export const CategoryBreakdownSection = ({
             rows,
             selectedYear,
             selectedCategory,
-            monthIndex
+            monthIndex,
           )
         : [],
-    [rows, selectedYear, selectedCategory, monthIndex]
+    [rows, selectedYear, selectedCategory, monthIndex],
   );
 
   return (
-    <Card className="rounded-lg border border-slate-200 bg-white shadow-sm">
+    <Card className="min-w-0 rounded-lg border border-slate-200 bg-white shadow-sm">
       <CardHeader className="p-5">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div>
@@ -113,11 +115,11 @@ export const CategoryBreakdownSection = ({
           </div>
         </div>
       </CardHeader>
-      <CardContent className="p-5 pt-0">
+      <CardContent className="min-w-0 p-5 pt-0">
         {categoryBreakdownData.categoryData.length > 0 ? (
           <div className="space-y-6">
             <CategoryBreakdownChart data={categoryBreakdownData.categoryData} />
-            <div className="grid gap-6 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
+            <div className="grid min-w-0 gap-6 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
               <CategoryDetailsTable
                 categoryData={categoryBreakdownData.categoryData}
                 selectedCategory={selectedCategory}

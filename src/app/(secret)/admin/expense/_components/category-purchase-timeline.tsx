@@ -53,31 +53,31 @@ export const CategoryPurchaseTimeline = ({
   const [grouping, setGrouping] = useState<CategoryItemGrouping>("day");
   const highestPurchase = itemData.reduce(
     (highest, item) => Math.max(highest, item.amount),
-    0
+    0,
   );
   const groupedItems = useMemo(
     () => getGroupedCategoryItemData(itemData, grouping),
-    [itemData, grouping]
+    [itemData, grouping],
   );
   const highlightedItems = useMemo(
     () => getHighlightedCategoryItemData(groupedItems),
-    [groupedItems]
+    [groupedItems],
   );
   const veryHighCount = highlightedItems.filter(
-    (item) => item.highlightLevel === "very-high"
+    (item) => item.highlightLevel === "very-high",
   ).length;
   const highCount = highlightedItems.filter(
-    (item) => item.highlightLevel === "high"
+    (item) => item.highlightLevel === "high",
   ).length;
 
   return (
-    <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+    <section className="min-w-0 rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
+        <div className="min-w-0">
           <p className="text-xs font-medium uppercase tracking-[0.16em] text-slate-500">
             Purchase timeline
           </p>
-          <h3 className="mt-2 text-xl font-semibold tracking-tight text-slate-950">
+          <h3 className="mt-2 break-words text-xl font-semibold tracking-tight text-slate-950">
             {category.category} purchases
           </h3>
           <p className="mt-2 text-sm leading-6 text-slate-600">
@@ -86,7 +86,7 @@ export const CategoryPurchaseTimeline = ({
             month to see how this category accumulates over time.
           </p>
         </div>
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid w-full shrink-0 gap-3 sm:w-auto sm:grid-cols-2">
           <DetailMetric
             label="Average purchase"
             value={formatCurrency(category.average)}
@@ -130,94 +130,103 @@ export const CategoryPurchaseTimeline = ({
         </div>
       </div>
 
-      <div className="mt-6">
-        <ChartContainer
-          config={{
-            amount: { label: "Typical", color: "#2563eb" },
-            high: { label: "High", color: "#f59e0b" },
-            veryHigh: { label: "Very high", color: "#e11d48" },
-          }}
-          className="h-[300px] w-full"
-        >
-          <BarChart data={highlightedItems} margin={{ left: 8, right: 8, top: 8 }}>
-            <XAxis
-              dataKey="label"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              minTickGap={24}
-              tickFormatter={(value) =>
-                grouping === "day" ? formatShortDate(String(value)) : String(value)
-              }
-              className="text-xs text-slate-500"
-            />
-            <YAxis
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              tickFormatter={(value) => formatCurrency(Number(value))}
-              className="text-xs text-slate-500"
-            />
-            <ChartTooltip
-              cursor={{ fill: "rgba(15, 23, 42, 0.08)" }}
-              content={({ active, payload }) => {
-                const entry = payload?.[0]?.payload as
-                  | HighlightedCategoryItemDatum
-                  | undefined;
-
-                if (!active || !entry) {
-                  return null;
-                }
-
-                return (
-                  <div className="rounded-md border border-slate-200 bg-white p-2 text-xs text-slate-700 shadow-sm">
-                    <div className="font-medium text-slate-900">
-                      {entry.label}
-                    </div>
-                    <div className="mt-1 text-slate-600">{entry.name}</div>
-                    {entry.description ? (
-                      <div className="text-slate-500">{entry.description}</div>
-                    ) : null}
-                    {entry.count > 1 ? (
-                      <div className="mt-1 text-slate-500">
-                        {entry.count} purchases in this period
-                      </div>
-                    ) : null}
-                    <div className="mt-1 font-medium text-slate-900">
-                      {formatCurrency(entry.amount)}
-                    </div>
-                    <div className="mt-1 text-slate-500">
-                      {entry.highlightLevel === "very-high"
-                        ? "Very high purchase"
-                        : entry.highlightLevel === "high"
-                          ? "High purchase"
-                          : "Typical purchase"}
-                    </div>
-                  </div>
-                );
-              }}
-            />
-            <Bar
-              dataKey="amount"
-              name="Spend"
-              fill="var(--color-amount)"
-              radius={[8, 8, 0, 0]}
+      <div className="-mx-5 mt-6 overflow-x-auto px-5 pb-2">
+        <div className="min-w-[620px] sm:min-w-0">
+          <ChartContainer
+            config={{
+              amount: { label: "Typical", color: "#2563eb" },
+              high: { label: "High", color: "#f59e0b" },
+              veryHigh: { label: "Very high", color: "#e11d48" },
+            }}
+            className="h-[300px] w-full"
+          >
+            <BarChart
+              data={highlightedItems}
+              margin={{ left: 8, right: 8, top: 8 }}
             >
-              {highlightedItems.map((item) => (
-                <Cell
-                  key={`${item.bucketKey}-${item.amount}`}
-                  fill={
-                    item.highlightLevel === "very-high"
-                      ? "var(--color-veryHigh)"
-                      : item.highlightLevel === "high"
-                        ? "var(--color-high)"
-                        : "var(--color-amount)"
+              <XAxis
+                dataKey="label"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                minTickGap={24}
+                tickFormatter={(value) =>
+                  grouping === "day"
+                    ? formatShortDate(String(value))
+                    : String(value)
+                }
+                className="text-xs text-slate-500"
+              />
+              <YAxis
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                tickFormatter={(value) => formatCurrency(Number(value))}
+                className="text-xs text-slate-500"
+              />
+              <ChartTooltip
+                cursor={{ fill: "rgba(15, 23, 42, 0.08)" }}
+                content={({ active, payload }) => {
+                  const entry = payload?.[0]?.payload as
+                    | HighlightedCategoryItemDatum
+                    | undefined;
+
+                  if (!active || !entry) {
+                    return null;
                   }
-                />
-              ))}
-            </Bar>
-          </BarChart>
-        </ChartContainer>
+
+                  return (
+                    <div className="rounded-md border border-slate-200 bg-white p-2 text-xs text-slate-700 shadow-sm">
+                      <div className="font-medium text-slate-900">
+                        {entry.label}
+                      </div>
+                      <div className="mt-1 text-slate-600">{entry.name}</div>
+                      {entry.description ? (
+                        <div className="text-slate-500">
+                          {entry.description}
+                        </div>
+                      ) : null}
+                      {entry.count > 1 ? (
+                        <div className="mt-1 text-slate-500">
+                          {entry.count} purchases in this period
+                        </div>
+                      ) : null}
+                      <div className="mt-1 font-medium text-slate-900">
+                        {formatCurrency(entry.amount)}
+                      </div>
+                      <div className="mt-1 text-slate-500">
+                        {entry.highlightLevel === "very-high"
+                          ? "Very high purchase"
+                          : entry.highlightLevel === "high"
+                            ? "High purchase"
+                            : "Typical purchase"}
+                      </div>
+                    </div>
+                  );
+                }}
+              />
+              <Bar
+                dataKey="amount"
+                name="Spend"
+                fill="var(--color-amount)"
+                radius={[8, 8, 0, 0]}
+              >
+                {highlightedItems.map((item) => (
+                  <Cell
+                    key={`${item.bucketKey}-${item.amount}`}
+                    fill={
+                      item.highlightLevel === "very-high"
+                        ? "var(--color-veryHigh)"
+                        : item.highlightLevel === "high"
+                          ? "var(--color-high)"
+                          : "var(--color-amount)"
+                    }
+                  />
+                ))}
+              </Bar>
+            </BarChart>
+          </ChartContainer>
+        </div>
       </div>
 
       <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-slate-600">

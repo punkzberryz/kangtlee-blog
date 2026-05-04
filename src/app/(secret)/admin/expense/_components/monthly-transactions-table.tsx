@@ -66,7 +66,9 @@ const formatCurrency = (value: number) =>
   });
 
 const globalExpenseFilter: FilterFn<ExpenseRow> = (row, columnId, value) => {
-  const search = String(value ?? "").trim().toLowerCase();
+  const search = String(value ?? "")
+    .trim()
+    .toLowerCase();
   if (!search) {
     return true;
   }
@@ -81,7 +83,7 @@ export const MonthlyTransactionsTable = ({
   selectedYear,
 }: MonthlyTransactionsTableProps) => {
   const [selectedMonth, setSelectedMonth] = useState(() =>
-    getDefaultMonth(selectedYear)
+    getDefaultMonth(selectedYear),
   );
   const [sorting, setSorting] = useState<SortingState>([
     { id: "date", desc: true },
@@ -95,10 +97,10 @@ export const MonthlyTransactionsTable = ({
         .filter(
           (row) =>
             getRowYear(row) === selectedYear &&
-            getRowMonthIndex(row) === monthIndex
+            getRowMonthIndex(row) === monthIndex,
         )
         .sort((a, b) => b.date.localeCompare(a.date) || b.amount - a.amount),
-    [rows, selectedYear, monthIndex]
+    [rows, selectedYear, monthIndex],
   );
   const monthlyTotal = monthlyRows.reduce((sum, row) => sum + row.amount, 0);
 
@@ -145,7 +147,7 @@ export const MonthlyTransactionsTable = ({
         ),
       },
     ],
-    []
+    [],
   );
 
   const table = useReactTable({
@@ -167,7 +169,7 @@ export const MonthlyTransactionsTable = ({
   const filteredRowsCount = table.getFilteredRowModel().rows.length;
 
   return (
-    <div className="space-y-4">
+    <div className="min-w-0 space-y-4">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
           <Select
@@ -206,7 +208,7 @@ export const MonthlyTransactionsTable = ({
       </div>
 
       <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
-        <Table>
+        <Table className="min-w-[780px]">
           <TableHeader className="bg-slate-50">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -227,7 +229,7 @@ export const MonthlyTransactionsTable = ({
                           ? null
                           : flexRender(
                               header.column.columnDef.header,
-                              header.getContext()
+                              header.getContext(),
                             )}
                         {{
                           asc: " ↑",
@@ -251,7 +253,7 @@ export const MonthlyTransactionsTable = ({
                     <TableCell key={cell.id} className="text-slate-700">
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}
@@ -270,16 +272,11 @@ export const MonthlyTransactionsTable = ({
           </TableBody>
         </Table>
       </div>
-
     </div>
   );
 };
 
-const ColumnFilter = ({
-  column,
-}: {
-  column: Column<ExpenseRow, unknown>;
-}) => {
+const ColumnFilter = ({ column }: { column: Column<ExpenseRow, unknown> }) => {
   const filterValue = (column.getFilterValue() ?? "") as string;
 
   return (

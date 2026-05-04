@@ -43,7 +43,7 @@ export const ExpenseDashboard = ({
 
   return (
     <main className="min-h-screen bg-slate-50 text-slate-950">
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8">
+      <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-sm font-medium uppercase tracking-[0.18em] text-teal-700">
@@ -70,7 +70,10 @@ export const ExpenseDashboard = ({
                 Sheet
               </a>
             </Button>
-            <Button asChild className="bg-slate-950 text-white hover:bg-slate-800">
+            <Button
+              asChild
+              className="bg-slate-950 text-white hover:bg-slate-800"
+            >
               <Link href="/admin/expense/new">
                 <Plus className="mr-2 size-4" />
                 Add
@@ -83,11 +86,11 @@ export const ExpenseDashboard = ({
           <>
             <ExpenseSummaryCards data={dashboardData} />
 
-            <div className="grid gap-6 xl:grid-cols-[minmax(0,1.45fr)_minmax(360px,0.9fr)]">
-              <Card className="rounded-lg border border-slate-200 bg-white shadow-sm">
+            <div className="grid min-w-0 gap-6 xl:grid-cols-[minmax(0,1.45fr)_minmax(360px,0.9fr)]">
+              <Card className="min-w-0 rounded-lg border border-slate-200 bg-white shadow-sm">
                 <CardHeader className="p-5">
-                  <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
+                  <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                    <div className="min-w-0">
                       <CardTitle className="text-lg text-slate-950">
                         Monthly spending
                       </CardTitle>
@@ -95,13 +98,17 @@ export const ExpenseDashboard = ({
                         Twelve-month spending cadence for {selectedYear}.
                       </CardDescription>
                     </div>
-                    <div className="rounded-full bg-teal-50 px-3 py-1 text-xs font-medium text-teal-700">
+                    <div className="w-fit shrink-0 rounded-full bg-teal-50 px-3 py-1 text-xs font-medium text-teal-700">
                       {formatCurrency(dashboardData.averageMonthlySpend)} avg
                     </div>
                   </div>
                 </CardHeader>
-                <CardContent className="p-5 pt-0">
-                  <MonthlySpendingChart data={dashboardData.monthlyData} />
+                <CardContent className="min-w-0 p-5 pt-0">
+                  <div className="-mx-5 overflow-x-auto px-5 pb-2">
+                    <div className="min-w-[620px] sm:min-w-0">
+                      <MonthlySpendingChart data={dashboardData.monthlyData} />
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
 
@@ -111,7 +118,7 @@ export const ExpenseDashboard = ({
               />
             </div>
 
-            <Card className="rounded-lg border border-slate-200 bg-white shadow-sm">
+            <Card className="min-w-0 rounded-lg border border-slate-200 bg-white shadow-sm">
               <CardHeader className="p-5">
                 <CardTitle className="text-lg text-slate-950">
                   Monthly transactions
@@ -120,7 +127,7 @@ export const ExpenseDashboard = ({
                   Select a month, search transactions, and filter by category.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="p-5 pt-0">
+              <CardContent className="min-w-0 p-5 pt-0">
                 <MonthlyTransactionsTable
                   rows={rows}
                   selectedYear={selectedYear}

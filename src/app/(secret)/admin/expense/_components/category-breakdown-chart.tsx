@@ -35,9 +35,11 @@ const chartColors = [
   "#475569",
 ];
 
-export const CategoryBreakdownChart = ({ data }: CategoryBreakdownChartProps) => {
+export const CategoryBreakdownChart = ({
+  data,
+}: CategoryBreakdownChartProps) => {
   return (
-    <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_13rem]">
+    <div className="grid min-w-0 gap-5 lg:grid-cols-[minmax(0,1fr)_13rem]">
       <ChartContainer
         config={{
           total: {
