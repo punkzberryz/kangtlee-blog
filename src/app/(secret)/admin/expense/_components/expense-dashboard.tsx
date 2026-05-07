@@ -43,7 +43,7 @@ export const ExpenseDashboard = ({
 
   return (
     <main className="min-h-screen bg-slate-50 text-slate-950">
-      <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8">
+      <div className="mx-auto flex w-full min-w-0 max-w-screen-2xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-sm font-medium uppercase tracking-[0.18em] text-teal-700">
@@ -86,7 +86,7 @@ export const ExpenseDashboard = ({
           <>
             <ExpenseSummaryCards data={dashboardData} />
 
-            <div className="grid min-w-0 gap-6 xl:grid-cols-[minmax(0,1.45fr)_minmax(360px,0.9fr)]">
+            <div className="grid min-w-0 gap-6">
               <Card className="min-w-0 rounded-lg border border-slate-200 bg-white shadow-sm">
                 <CardHeader className="p-5">
                   <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">

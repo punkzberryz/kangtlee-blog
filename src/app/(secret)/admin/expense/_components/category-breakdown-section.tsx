@@ -119,7 +119,7 @@ export const CategoryBreakdownSection = ({
         {categoryBreakdownData.categoryData.length > 0 ? (
           <div className="space-y-6">
             <CategoryBreakdownChart data={categoryBreakdownData.categoryData} />
-            <div className="grid min-w-0 gap-6 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
+            <div className="grid min-w-0 gap-6 2xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
               <CategoryDetailsTable
                 categoryData={categoryBreakdownData.categoryData}
                 selectedCategory={selectedCategory}

@@ -52,7 +52,7 @@ export const CategoryDetailsTable = ({
         </p>
       </div>
 
-      <div className="mt-4 overflow-hidden rounded-lg border border-slate-200">
+      <div className="mt-4 overflow-x-auto rounded-lg border border-slate-200">
         <Table className="min-w-[660px]">
           <TableHeader className="bg-slate-50">
             <TableRow>
